@@ -31,8 +31,8 @@ namespace AttendanceTracking.View.Components
         public AttendanceAccountingTable()
         {
             InitializeComponent();
-            GetHoursQuery = d => new MonthTable.Value[] { new MonthTable.Value(0, 5, 8)};
-            EditHoursCommand = e => MessageBox.Show($"({e.RowIndex},{e.Day}): {e.Hours}");
+            GetHoursQuery = d => new MonthTable.Value[] { new MonthTable.Value(0, 5, 8, true)};
+            EditHoursCommand = e => MessageBox.Show($"({e.RowIndex},{e.Day}): {e.Hours} ->{e.IsExcused}");
             InitMonthDataGrid(DateTime.Now);
         }
 

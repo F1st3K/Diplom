@@ -28,7 +28,9 @@ namespace AttendanceTracking.View.Components
             public int RowIndex { get; private set; }
             public int Day { get; private set; }
             public int Hours { get; private set; }
-            public Value(int rowIndex, int day, int hours)
+            private bool _isExcused;
+            public bool IsExcused => _isExcused ? Hours > 0 : false;
+            public Value(int rowIndex, int day, int hours, bool isExcused)
             {
                 if (rowIndex < 0)
                     throw new ArgumentException("rowIndex must be more zero");
@@ -39,6 +41,7 @@ namespace AttendanceTracking.View.Components
                 RowIndex = rowIndex;
                 Day = day;
                 Hours = hours;
+                _isExcused = isExcused;
             }
         }
 
@@ -47,6 +50,8 @@ namespace AttendanceTracking.View.Components
         public event ChangeHoursHandler ChangeHours;
 
         private int[] _holidays;
+        private Value[] _values;
+        private DataTable _source;
 
         public static MonthTable Create(DateTime date, int rows, params Value[] values)
         {
@@ -66,27 +71,25 @@ namespace AttendanceTracking.View.Components
                 source.Add(row);
             }
 
-            foreach (var v in values)
-                source[v.RowIndex][v.Day - 1] = v.Hours.ToString();
-
-            return new MonthTable(source, holidays.ToArray());
+            var str = new string[0];
+            return new MonthTable(source, values, holidays.ToArray());
         }
 
-        public MonthTable(List<List<string>> source, params int[] holidays)
+        public MonthTable(List<List<string>> source, Value[] values = null, params int[] holidays)
         {
-            InitializeComponent();
-            InitializeMonthTable(source);
             _holidays = holidays;
+            _values = values ?? new Value[0];
+            _source = new DataTable();
+            for (int i = 1; i <= source.First().Count; i++)
+                _source.Columns.Add(new DataColumn(i.ToString()));
+            source.ForEach(r => _source.Rows.Add(r.ToArray()));
+            InitializeComponent();
+            InitializeMonthTable();
         }
 
-        private void InitializeMonthTable(List<List<string>> source)
+        private void InitializeMonthTable()
         {
-            var table = new DataTable();
-            for (int i = 1; i <= source.First().Count; i++)
-                table.Columns.Add(new DataColumn(i.ToString()));
-            source.ForEach(r => table.Rows.Add(r.ToArray()));
-
-            Table.ItemsSource = table.DefaultView;
+            Table.ItemsSource = _source.DefaultView;
             Table.CellEditEnding += Table_CellEditEnding;
             Table.BeginningEdit += Table_BeginningEdit;
         }
@@ -120,6 +123,8 @@ namespace AttendanceTracking.View.Components
             var row = e.Row.GetIndex();
             var column = e.Column.DisplayIndex;
             string newValue = (e.EditingElement as TextBox).Text;
+            DataGridRow rowTable = (DataGridRow)Table.ItemContainerGenerator.ContainerFromIndex(row);
+            DataGridCell cell = Table.Columns[column].GetCellContent(rowTable).Parent as DataGridCell;
 
             if (!int.TryParse(newValue, out var number) && newValue != string.Empty)
             {
@@ -137,14 +142,31 @@ namespace AttendanceTracking.View.Components
                 (e.Row.Item as DataRowView).Row[column] = string.Empty;
             }
 
-            ChangeHours.Invoke(sender, new Value(row, column + 1, number));
+            if ((e.Row.Item as DataRowView).Row[column].ToString() != _cellText)
+            {
+                if (cell.Background == Brushes.White)
+                {
+                    cell.Background = Brushes.Red;
+                    cell.Foreground = Brushes.White;
+                }
+                if (number == 0)
+                {
+                    cell.Background = Brushes.White;
+                    cell.Foreground = Brushes.Black;
+                }
+
+                ChangeHours.Invoke(sender, new Value(row, column + 1, number, cell.Background == Brushes.Green));
+            }
         }
 
-       
+
 
         private void Table_Loaded(object sender, RoutedEventArgs e)
-        {           
-
+        {
+            Style styleCells = new Style(typeof(DataGridCell));
+            styleCells.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.White));
+            styleCells.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Black));
+            Table.CellStyle = styleCells;
             foreach (var day in _holidays)
             {
                 DataGridTemplateColumn buttonColumn = new DataGridTemplateColumn();
@@ -152,9 +174,23 @@ namespace AttendanceTracking.View.Components
                 buttonColumn.Header = day;
 
                 FrameworkElementFactory buttonFactory = new FrameworkElementFactory(typeof(Button));
-                buttonFactory.SetValue(Button.ContentProperty, "");
+                
                 buttonColumn.CellTemplate.VisualTree = buttonFactory;
                 Table.Columns[day - 1] = buttonColumn;
+            }
+
+            foreach (var v in _values)
+            {
+                _source.Rows[v.RowIndex][v.Day - 1] = v.Hours.ToString();
+                Brush newBackgroundBrush = v.IsExcused ? Brushes.Green : Brushes.Red;
+
+                DataGridRow row = (DataGridRow)Table.ItemContainerGenerator.ContainerFromIndex(v.RowIndex);
+                DataGridCell cell = Table.Columns[v.Day - 1].GetCellContent(row).Parent as DataGridCell;
+
+                Style style = new Style(typeof(DataGridCell));
+                style.Setters.Add(new Setter(DataGridCell.BackgroundProperty, newBackgroundBrush));
+                style.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.White));
+                cell.Style = style;
             }
         }
     }
