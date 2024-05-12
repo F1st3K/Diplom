@@ -193,5 +193,56 @@ namespace AttendanceTracking.View.Components
                 cell.Style = style;
             }
         }
+
+        private void Table_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var cell = GetCellFromCellInfo(Table.CurrentCell);
+            if (cell != null)
+            {
+                ContextEditToExcused.Visibility = cell.Background == Brushes.Red 
+                    ? Visibility.Visible : Visibility.Collapsed;
+                ContextEditToUnexcused.Visibility = cell.Background == Brushes.Green
+                    ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private DataGridCell GetCellFromCellInfo(DataGridCellInfo cellInfo)
+        {
+            if (cellInfo.IsValid)
+            {
+                DataGridCell cell = cellInfo.Column.GetCellContent(cellInfo.Item).Parent as DataGridCell;
+                return cell;
+            }
+
+            return null;
+        }
+
+        private void ContextEditToExcused_Click(object sender, RoutedEventArgs e)
+        {
+            var cell = GetCellFromCellInfo(Table.CurrentCell);
+            cell.Background = Brushes.Green;
+
+            int rowIndex = Table.Items.IndexOf(cell.DataContext);
+
+            int columnIndex = cell.Column.DisplayIndex;
+
+            int number = int.Parse(((TextBlock)cell.Content).Text);
+
+            ChangeHours.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green));
+        }
+
+        private void ContextEditToUnexcused_Click(object sender, RoutedEventArgs e)
+        {
+            var cell = GetCellFromCellInfo(Table.CurrentCell);
+            cell.Background = Brushes.Red;
+
+            int rowIndex = Table.Items.IndexOf(cell.DataContext);
+
+            int columnIndex = cell.Column.DisplayIndex;
+
+            int number = int.Parse(((TextBlock)cell.Content).Text);
+
+            ChangeHours.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green)); ;
+        }
     }
 }

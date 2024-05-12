@@ -17,7 +17,24 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-       
+        <ComboBox Name="MonthSwitcher"
+                  Grid.Column="0"
+                  Grid.Row="0">
+            <ComboBoxItem Content="Текущий месяц" Selected="CurrentMonth_Selected"/>
+            <ComboBoxItem Content="Предидущий месяц" Selected="PrevMonth_Selected"/>
+        </ComboBox>
+        
+        <TextBlock 
+            Grid.Column="1"
+            Grid.Row="0">
+            <Run Text="Учет посещаемости группы"/>
+            <Run Name="TextGroup"/>
+            <Run Text="за"/>
+            <Run Name="TextMonth"/>
+            <Run Name="TextYear"/>
+            <Run Text="г."/>
+        </TextBlock>
+
         <DataGrid Name="StudentsTable"
                   Grid.Column="0"
                   Grid.Row="1"
@@ -27,10 +44,16 @@
                 <DataGridTextColumn 
                     Header="№"
                     Binding="{Binding Id}"
+                    CanUserSort="False"
+                    CanUserResize="False"
+                    CanUserReorder="False"
                 />
                 <DataGridTextColumn 
                     Header="Фамилия Имя Отчество"
                     Binding="{Binding FullName}"
+                    CanUserSort="False"
+                    CanUserResize="False"
+                    CanUserReorder="False"
                 />
             </DataGrid.Columns>
         </DataGrid>

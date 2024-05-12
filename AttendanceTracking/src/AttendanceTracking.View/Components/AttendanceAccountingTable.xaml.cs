@@ -23,17 +23,21 @@ namespace AttendanceTracking.View.Components
     {
         private MonthTable MonthTable;
 
-        public Func<DateTime, IEnumerable<MonthTable.Value>> GetHoursQuery = 
-            date => Enumerable.Empty<MonthTable.Value>();
-        public Action<MonthTable.Value> EditHoursCommand = 
-            value => { };
+        private Func<DateTime, IEnumerable<MonthTable.Value>> _getHoursQuery;
+        private Action<MonthTable.Value> _editHoursCommand;
 
-        public AttendanceAccountingTable()
+        public AttendanceAccountingTable(
+            string groupName, 
+            IEnumerable<string> students, 
+            Func<DateTime, IEnumerable<MonthTable.Value>> getHoursQuery,
+            Action<MonthTable.Value> editHoursCommand)
         {
             InitializeComponent();
-            GetHoursQuery = d => new MonthTable.Value[] { new MonthTable.Value(0, 8, 8, true)};
-            EditHoursCommand = e => MessageBox.Show($"({e.RowIndex},{e.Day}): {e.Hours} ->{e.IsExcused}");
-            InitMonthDataGrid(DateTime.Now);
+            TextGroup.Text = groupName;
+            StudentsTable.ItemsSource = students.Select((s, i) => new { Id = i+1, FullName = s });
+            _getHoursQuery = getHoursQuery;
+            _editHoursCommand = editHoursCommand;
+            MonthSwitcher.SelectedIndex = 0;
         }
 
         private void InitMonthDataGrid(DateTime date)
@@ -43,14 +47,31 @@ namespace AttendanceTracking.View.Components
                 MonthTable.ChangeHours -= MonthTable_ChangeHours;
                 MonthDataGrid.Children.Clear();
             }
-            MonthTable = MonthTable.Create(date, 25, GetHoursQuery?.Invoke(date).ToArray());
+            MonthTable = MonthTable.Create(date, StudentsTable.Items.Count, _getHoursQuery?.Invoke(date).ToArray());
             MonthTable.ChangeHours += MonthTable_ChangeHours;
             MonthDataGrid.Children.Add(MonthTable);
         }
 
         private void MonthTable_ChangeHours(object sender, MonthTable.Value e)
         {
-            EditHoursCommand?.Invoke(e);
+            _editHoursCommand?.Invoke(e);
+        }
+
+        private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+        private void CurrentMonth_Selected(object sender, RoutedEventArgs e)
+        {
+            var currentDay = DateTime.Today;
+            InitMonthDataGrid(currentDay);
+            TextMonth.Text = russianMonths[currentDay.Month - 1];
+            TextYear.Text = currentDay.Year.ToString();
+        }
+
+        private void PrevMonth_Selected(object sender, RoutedEventArgs e)
+        {
+            var prevMonthDay = DateTime.Today.AddMonths(-1);
+            InitMonthDataGrid(prevMonthDay);
+            TextMonth.Text = russianMonths[prevMonthDay.Month - 1];
+            TextYear.Text = prevMonthDay.Year.ToString();
         }
     }
 }

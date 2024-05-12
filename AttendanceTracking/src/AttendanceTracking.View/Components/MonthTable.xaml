@@ -9,6 +9,7 @@
     <Grid>
         <DataGrid Name="Table"
                   Loaded="Table_Loaded"
+                  MouseRightButtonUp="Table_MouseRightButtonUp"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserResizeColumns="False"
@@ -16,7 +17,16 @@
                   CanUserSortColumns="False"
                   CanUserReorderColumns="False"
                   >
-            
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="ContextEditToExcused"
+                              Header="Пометить как уважительные"
+                              Click="ContextEditToExcused_Click"></MenuItem>
+                    <MenuItem Name="ContextEditToUnexcused"
+                              Header="Пометить как неуважительные"
+                              Click="ContextEditToUnexcused_Click"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid> 
     </Grid>
 </UserControl>
