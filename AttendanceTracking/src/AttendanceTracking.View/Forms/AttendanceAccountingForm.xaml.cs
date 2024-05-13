@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AttendanceTracking.View.Components;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,30 +11,29 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AttendanceTracking.View.Components
+namespace AttendanceTracking.View.Forms
 {
     /// <summary>
-    /// Interaction logic for AttendanceAccountingTable.xaml
+    /// Interaction logic for AttendanceAccountingForm.xaml
     /// </summary>
-    public partial class AttendanceAccountingTable : UserControl
+    public partial class AttendanceAccountingForm : Window
     {
         private MonthTable MonthTable;
 
         private Func<DateTime, IEnumerable<MonthTable.Value>> _getHoursQuery;
         private Action<MonthTable.Value> _editHoursCommand;
 
-        public AttendanceAccountingTable(
-            string groupName, 
-            IEnumerable<string> students, 
+        public AttendanceAccountingForm(
+            string groupName,
+            IEnumerable<string> students,
             Func<DateTime, IEnumerable<MonthTable.Value>> getHoursQuery,
             Action<MonthTable.Value> editHoursCommand)
         {
             InitializeComponent();
             TextGroup.Text = groupName;
-            StudentsTable.ItemsSource = students.Select((s, i) => new { Id = i+1, FullName = s });
+            StudentsTable.ItemsSource = students.Select((s, i) => new { Id = i + 1, FullName = s });
             _getHoursQuery = getHoursQuery;
             _editHoursCommand = editHoursCommand;
             MonthSwitcher.SelectedIndex = 0;

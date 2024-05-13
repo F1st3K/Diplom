@@ -55,11 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Components\AttendanceAccountingTable.xaml">
+    <Page Include="Forms\AttendanceAccountingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MonthTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AuthForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -71,11 +75,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Components\AttendanceAccountingTable.xaml.cs">
-      <DependentUpon>AttendanceAccountingTable.xaml</DependentUpon>
+    <Compile Include="Forms\AttendanceAccountingForm.xaml.cs">
+      <DependentUpon>AttendanceAccountingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\MonthTable.xaml.cs">
       <DependentUpon>MonthTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AuthForm.xaml.cs">
+      <DependentUpon>AuthForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
