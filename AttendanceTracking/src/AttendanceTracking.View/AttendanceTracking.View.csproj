@@ -55,11 +55,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Forms\AppointmentCuratorsForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AppointmentLeaderForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\AttendanceAccountingForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MonthTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AttendanceViewForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -75,11 +87,20 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Forms\AppointmentCuratorsForm.xaml.cs">
+      <DependentUpon>AppointmentCuratorsForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AppointmentLeaderForm.xaml.cs">
+      <DependentUpon>AppointmentLeaderForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AttendanceAccountingForm.xaml.cs">
       <DependentUpon>AttendanceAccountingForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\MonthTable.xaml.cs">
       <DependentUpon>MonthTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AttendanceViewForm.xaml.cs">
+      <DependentUpon>AttendanceViewForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\AuthForm.xaml.cs">
       <DependentUpon>AuthForm.xaml</DependentUpon>

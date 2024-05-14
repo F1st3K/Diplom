@@ -155,7 +155,7 @@ namespace AttendanceTracking.View.Components
                     cell.Foreground = Brushes.Black;
                 }
 
-                ChangeHours.Invoke(sender, new Value(row, column + 1, number, cell.Background == Brushes.Green));
+                ChangeHours?.Invoke(sender, new Value(row, column + 1, number, cell.Background == Brushes.Green));
             }
         }
 
@@ -228,7 +228,7 @@ namespace AttendanceTracking.View.Components
 
             int number = int.Parse(((TextBlock)cell.Content).Text);
 
-            ChangeHours.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green));
+            ChangeHours?.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green));
         }
 
         private void ContextEditToUnexcused_Click(object sender, RoutedEventArgs e)
@@ -242,7 +242,7 @@ namespace AttendanceTracking.View.Components
 
             int number = int.Parse(((TextBlock)cell.Content).Text);
 
-            ChangeHours.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green)); ;
+            ChangeHours?.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green)); ;
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿<Window x:Class="AttendanceTracking.View.Forms.AttendanceAccountingForm"
+﻿<Window x:Class="AttendanceTracking.View.Forms.AttendanceViewForm"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="Учет посещаемости" Height="450" Width="800">
+        Title="Просмотр учета посещаемости за месяц" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -25,15 +25,30 @@
         </ComboBox>
 
         <TextBlock 
-            Grid.Column="1"
-            Grid.Row="0">
+                Grid.Column="1"
+                Grid.Row="0"
+                HorizontalAlignment="Left">
             <Run Text="Учет посещаемости группы"/>
             <Run Name="TextGroup"/>
             <Run Text="за"/>
             <Run Name="TextMonth"/>
             <Run Name="TextYear"/>
             <Run Text="г."/>
+
         </TextBlock>
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+            
+
+            <Button Name="CreateReport"
+                    Content="Экспортировать отчет"
+            />
+        </StackPanel>
+        
+        
 
         <DataGrid Name="StudentsTable"
                   IsReadOnly="True"
