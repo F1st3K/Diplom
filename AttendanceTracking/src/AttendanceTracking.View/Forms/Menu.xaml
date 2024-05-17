@@ -1,0 +1,110 @@
+﻿<Window x:Class="AttendanceTracking.View.Forms.Menu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
+        mc:Ignorable="d"
+        FontSize="16pt"
+        WindowStartupLocation="CenterScreen"
+        Title="Меню" MinHeight="576" MinWidth="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Center"
+                       Margin="10pt, 5pt"
+                       FontSize="22">
+                Автоматизированая  информационная система учета посещаемости занятий
+            </TextBlock>
+            <Grid Margin="10pt, 5pt">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">
+                    Вы вошли как: <Run Name="FullName"/>
+                </TextBlock>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Right">
+                    Ваша роль: <Run Name="Roles"/>
+                </TextBlock>
+            </Grid>
+        </StackPanel>
+
+
+        <Image Source="icon.png"
+            Grid.Row="1"  
+            Grid.Column="1"
+        />
+
+        <StackPanel Name="RoleButtons"
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+        >
+            <Button Name="AccountButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Учет посещаемости"
+                    />
+            <Button Name="ViewMonthAttendanceButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Посещаемость за месяц"
+                    />
+            <Button Name="ViewAttendanceButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Общая посещаемость"
+                    />
+            <Button Name="AppointLeaderButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Назначение старосты"
+                    />
+            <Button Name="AppointCuratorsButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Назначение Кураторов"
+                    />
+            <Button Name="AccountsButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Учетные записи"
+                    />
+            <Button Name="ImportTablesButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Импортирование таблиц"
+                    />
+            <Button Name="BackupButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt, 5pt"
+                    Content="Восстановление данных"
+                    />
+            <Button Name="ExitButton"
+                    Height="1.1cm"
+                    Width="10cm"
+                    Margin="10pt"
+                    Content="Выйти"
+                    />
+        </StackPanel>
+    </Grid>
+</Window>

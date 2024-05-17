@@ -35,33 +35,38 @@
             <Run Text="г."/>
         </TextBlock>
 
-        <DataGrid Name="StudentsTable"
-                  IsReadOnly="True"
-                  Grid.Column="0"
-                  Grid.Row="1"
-                  ItemsSource="{Binding People}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn 
-                    Header="№"
-                    Binding="{Binding Id}"
-                    CanUserSort="False"
-                    CanUserResize="False"
-                    CanUserReorder="False"
-                />
-                <DataGridTextColumn 
-                    Header="Фамилия Имя Отчество"
-                    Binding="{Binding FullName}"
-                    CanUserSort="False"
-                    CanUserResize="False"
-                    CanUserReorder="False"
-                />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Name="MonthDataGrid"
-                  Grid.Column="1"
-                  Grid.Row="1">
+        <ScrollViewer
+            Grid.Column="0"
+            Grid.Row="1"
+            Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <DataGrid Name="StudentsTable"
+                      IsReadOnly="True"
+                      
+                      ItemsSource="{Binding People}"
+                      AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                        Header="№"
+                        Binding="{Binding Id}"
+                        CanUserSort="False"
+                        CanUserResize="False"
+                        CanUserReorder="False"
+                    />
+                        <DataGridTextColumn 
+                        Header="Фамилия Имя Отчество"
+                        Binding="{Binding FullName}"
+                        CanUserSort="False"
+                        CanUserResize="False"
+                        CanUserReorder="False"
+                    />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Name="MonthDataGrid">
 
-        </Grid>
+                </Grid>
+            </StackPanel>
+
+        </ScrollViewer>
     </Grid>
 </Window>

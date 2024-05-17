@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Menu = AttendanceTracking.View.Forms.Menu;
 
 namespace AttendanceTracking.View
 {
@@ -32,7 +33,7 @@ namespace AttendanceTracking.View
                 e => MessageBox.Show($"({e.RowIndex},{e.Day}): {e.Hours} ->{e.IsExcused}")
             );
             form.Show();
-            var formView = new AttendanceViewForm(
+            var formView = new MonthAttendanceViewForm(
                 "ПС-20Б",
                 new[] { "Иванов Иван Иванович", "Петров Петр Петрович", "Сидоров Александр Сергеевич", "Козлов Дмитрий Александрович", "Ильин Андрей Васильевич", "Морозов Сергей Николаевич", "Никитин Владимир Игоревич", "Захаров Алексей Дмитриевич", "Орлов Егор Владимирович", "Семенов Виктор Павлович", "Макаров Игорь Степанович", "Андреев Максим Викторович", "Лебедев Артем Алексеевич", "Архипов Даниил Сергеевич", "Степанов Григорий Антонович", "Кузнецов Роман Александрович", "Тимофеев Артур Дмитриевич", "Павлов Павел Олегович", "Жуков Николай Валерьевич", "Беляев Василий Васильевич", "Щербаков Валентин Степанович", "Григорьев Георгий Петрович", "Комаров Вячеслав Евгеньевич", "Прокофьев Федор Арсеньевич", "Власов Владислав Игнатьевич" },
                 d => new MonthTable.Value[] { new MonthTable.Value(0, 8, 8, true) }
@@ -51,6 +52,7 @@ namespace AttendanceTracking.View
             );
             formCurators.Show();
             new AuthForm().Show();
+            new Menu().Show();
         }
     }
 }

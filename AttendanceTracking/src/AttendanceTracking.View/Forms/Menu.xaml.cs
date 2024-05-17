@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace AttendanceTracking.View.Forms
 {
     /// <summary>
-    /// Interaction logic for AttendanceViewForm.xaml
+    /// Interaction logic for Menu.xaml
     /// </summary>
-    public partial class AttendanceViewForm : Window
+    public partial class Menu : Window
     {
-        public AttendanceViewForm()
+        public Menu()
         {
             InitializeComponent();
         }
