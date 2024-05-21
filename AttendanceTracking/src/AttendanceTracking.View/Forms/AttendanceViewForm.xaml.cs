@@ -20,6 +20,12 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AttendanceViewForm : Window
     {
+        private int[] Years = new int[] {
+                (DateTime.Now.Month > 8 ? DateTime.Now.Year : DateTime.Now.Year - 1),
+                ((DateTime.Now.Month > 8 ? DateTime.Now.Year : DateTime.Now.Year - 1) - 1),
+                ((DateTime.Now.Month > 8 ? DateTime.Now.Year : DateTime.Now.Year - 1) - 2),
+                ((DateTime.Now.Month > 8 ? DateTime.Now.Year : DateTime.Now.Year - 1) - 3)
+            };
         private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
         private Func<DateTime, IEnumerable<AditionMonthTable.Value>> _getAttendenceMonthQuery;
 
@@ -47,12 +53,7 @@ namespace AttendanceTracking.View.Forms
                 .Select((s, i) => new { Id = i + 1, FullName = s })
                 .Concat(new object[] { new { FullName = "Всего пропусков:" } });
             _getAttendenceMonthQuery = getAttendenceMonthQuery;
-            ComboYear.ItemsSource = new string[] { 
-                DateTime.Now.Year.ToString(),
-                (DateTime.Now.Year - 1).ToString(),
-                (DateTime.Now.Year - 2).ToString(),
-                (DateTime.Now.Year - 3).ToString(),
-            };
+            ComboYear.ItemsSource = Years.Select(y => $"{y} - {y + 1}");
             ComboYear.SelectedIndex = 0;
             ComboSemestr.SelectionChanged += InitMonthTables;
             ComboYear.SelectionChanged += InitMonthTables;
@@ -64,26 +65,26 @@ namespace AttendanceTracking.View.Forms
             Months.Clear();
             if (ComboSemestr.SelectedIndex == 0 || ComboSemestr.SelectedIndex == 1)
             {
-                var sep = new DateTime(int.Parse(ComboYear.Text), 9, 1);
+                var sep = new DateTime(Years[ComboYear.SelectedIndex], 9, 1);
                 Months.Add(new AttendenceMonth(sep, _getAttendenceMonthQuery(sep).ToArray()));
-                var oct = new DateTime(int.Parse(ComboYear.Text), 10, 1);
+                var oct = new DateTime(Years[ComboYear.SelectedIndex], 10, 1);
                 Months.Add(new AttendenceMonth(oct, _getAttendenceMonthQuery(oct).ToArray()));
-                var nov = new DateTime(int.Parse(ComboYear.Text), 11, 1);
+                var nov = new DateTime(Years[ComboYear.SelectedIndex], 11, 1);
                 Months.Add(new AttendenceMonth(nov, _getAttendenceMonthQuery(nov).ToArray()));
-                var dec = new DateTime(int.Parse(ComboYear.Text), 12, 1);
+                var dec = new DateTime(Years[ComboYear.SelectedIndex], 12, 1);
                 Months.Add(new AttendenceMonth(dec, _getAttendenceMonthQuery(dec).ToArray()));
             }
             if (ComboSemestr.SelectedIndex == 0 || ComboSemestr.SelectedIndex == 2)
             {
-                var yan = new DateTime(int.Parse(ComboYear.Text) + 1, 1, 1);
+                var yan = new DateTime(Years[ComboYear.SelectedIndex] + 1, 1, 1);
                 Months.Add(new AttendenceMonth(yan, _getAttendenceMonthQuery(yan).ToArray()));
-                var feb = new DateTime(int.Parse(ComboYear.Text) + 1, 2, 1);
+                var feb = new DateTime(Years[ComboYear.SelectedIndex] + 1, 2, 1);
                 Months.Add(new AttendenceMonth(feb, _getAttendenceMonthQuery(feb).ToArray()));
-                var mar = new DateTime(int.Parse(ComboYear.Text) + 1, 3, 1);
+                var mar = new DateTime(Years[ComboYear.SelectedIndex] + 1, 3, 1);
                 Months.Add(new AttendenceMonth(mar, _getAttendenceMonthQuery(mar).ToArray()));
-                var may = new DateTime(int.Parse(ComboYear.Text) + 1, 5, 1);
+                var may = new DateTime(Years[ComboYear.SelectedIndex] + 1, 5, 1);
                 Months.Add(new AttendenceMonth(may, _getAttendenceMonthQuery(may).ToArray()));
-                var jun = new DateTime(int.Parse(ComboYear.Text) + 1, 6, 1);
+                var jun = new DateTime(Years[ComboYear.SelectedIndex] + 1, 6, 1);
                 Months.Add(new AttendenceMonth(jun, _getAttendenceMonthQuery(jun).ToArray()));
             }
 
