@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Components\AditionMonthTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\AppointmentCuratorsForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,6 +114,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Components\AditionMonthTable.xaml.cs">
+      <DependentUpon>AditionMonthTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\AppointmentCuratorsForm.xaml.cs">
       <DependentUpon>AppointmentCuratorsForm.xaml</DependentUpon>

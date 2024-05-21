@@ -16,7 +16,36 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
+        <TextBlock 
+                Grid.Column="1"
+                Grid.Row="0"
+                HorizontalAlignment="Left">
+            <Run Text="Посещаемость группы"/>
+            <Run Name="TextGroup"/>
+            <Run Text="за"/>
+            <ComboBox Name="ComboSemestr" 
+                      SelectedIndex="0">
+                <ComboBoxItem Content="все семестры"/>
+                <ComboBoxItem Content="1 семестр"/>
+                <ComboBoxItem Content="2 семестр"/>
+            </ComboBox>
+            <ComboBox Name="ComboYear" 
+                      SelectedIndex="0"/>
+            <Run Text="года."/>
+        </TextBlock>
+        <StackPanel
+            Grid.Column="1"
+            Grid.Row="0"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+
+
+            <Button Name="CreateReport"
+                    Content="Экспортировать отчет"
+            />
+        </StackPanel>
+
         <ScrollViewer
             Grid.Column="0"
             Grid.Row="1"
@@ -24,11 +53,11 @@
             <StackPanel Orientation="Horizontal">
                 <DataGrid Name="StudentsTable"
                       IsReadOnly="True"
-                      
+                      ColumnHeaderHeight="41"
                       ItemsSource="{Binding People}"
                       AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn 
+                        <DataGridTextColumn
                         Header="№"
                         Binding="{Binding Id}"
                         CanUserSort="False"
@@ -44,37 +73,45 @@
                     />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Grid Name="MonthDataGrid">
-
-                </Grid>
-                <DataGrid Name="AditionalTable"
+                <StackPanel Name="MonthDataGrid"
+                            Orientation="Horizontal"/>
+                <StackPanel>
+                    <TextBlock Text="Итого:"/>
+                    <DataGrid Name="AditionalTable"
                       IsReadOnly="True"
                       ItemsSource="{Binding Statuses}"
                       AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn 
-                        Header="Всего"
-                        Binding="{Binding Sum}"
-                        CanUserSort="False"
-                        CanUserResize="False"
-                        CanUserReorder="False"
-                    />
-                    <DataGridTextColumn 
-                        Header="Уваж."
-                        Binding="{Binding Excused}"
-                        CanUserSort="False"
-                        CanUserResize="False"
-                        CanUserReorder="False"
-                    />
+                            FontWeight="ExtraBold"
+                            Foreground="BlueViolet"
+                            Header="всего"
+                            Binding="{Binding Sum}"
+                            CanUserSort="False"
+                            CanUserResize="False"
+                            CanUserReorder="False"
+                        />
                         <DataGridTextColumn 
-                        Header="Не уваж."
-                        Binding="{Binding Unexcused}"
-                        CanUserSort="False"
-                        CanUserResize="False"
-                        CanUserReorder="False"
-                    />
+                            FontWeight="ExtraBold"
+                            Foreground="DarkGreen"
+                            Header="уваж."
+                            Binding="{Binding Excused}"
+                            CanUserSort="False"
+                            CanUserResize="False"
+                            CanUserReorder="False"
+                        />
+                        <DataGridTextColumn 
+                            FontWeight="ExtraBold"
+                            Foreground="DarkRed"
+                            Header="неуваж."
+                            Binding="{Binding Unexcused}"
+                            CanUserSort="False"
+                            CanUserResize="False"
+                            CanUserReorder="False"
+                        />
                     </DataGrid.Columns>
                 </DataGrid>
+                </StackPanel>
             </StackPanel>
 
         </ScrollViewer>
