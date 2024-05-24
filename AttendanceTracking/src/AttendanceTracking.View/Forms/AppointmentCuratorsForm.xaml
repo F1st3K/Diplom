@@ -15,30 +15,16 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <StackPanel 
+                 Grid.Column="0"
+                 Grid.Row="1">
+            <TextBox Name="SearchBox"/>
+            <ListBox Name="Groups"
+                 SelectionChanged="Groups_SelectionChanged"/>
+        </StackPanel>
         
-        <DataGrid Name="GroupsTable"
-                  IsReadOnly="True"
-                  Grid.Column="0"
-                  Grid.Row="1"
-                  ItemsSource="{Binding Groups}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn 
-                    Header="Группа"
-                    Binding="{Binding Group}"
-                    CanUserSort="False"
-                    CanUserResize="False"
-                    CanUserReorder="False"
-                />
-                <DataGridTextColumn 
-                    Header="Куратор"
-                    Binding="{Binding Curator}"
-                    CanUserSort="False"
-                    CanUserResize="False"
-                    CanUserReorder="False"
-                />
-            </DataGrid.Columns>
-        </DataGrid>
+
 
         <TextBlock
             Grid.Column="1"
@@ -58,14 +44,16 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             >
-            <ComboBox Name="Students"
+            <ComboBox Name="Prepods"
                       FontSize="15"
                       Margin="0, 10"
                       Width="200pt"/>
             <Button Name="SetLeader"
                     FontSize="15"
                     Margin="0, 10"
-                    Content="Назначить куратором"/>
+                    Content="Назначить куратором"
+                    Click="SetLeader_Click"
+                    />
         </StackPanel>
     </Grid>
 </Window>

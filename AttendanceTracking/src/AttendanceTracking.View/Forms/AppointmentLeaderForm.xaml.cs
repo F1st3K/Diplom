@@ -19,14 +19,34 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AppointmentLeaderForm : Window
     {
+        public class Student
+        {
+            public int Id;
+            public string FullName;
+            public Student(int id, string fullName)
+            {
+                Id = id;
+                FullName = fullName;
+            }
+        }
 
-        public AppointmentLeaderForm(string group, string[] students, int leaderId)
+        private Action<int> _editLeaderIdCommand;
+        private IEnumerable<Student> _students;
+
+        public AppointmentLeaderForm(string group, IEnumerable<Student> students, int leaderId, Action<int> editLeaderId)
         {
             InitializeComponent();
             GroupText.Text = group;
-            LeaderText.Text = students[leaderId];
-            Students.ItemsSource = students.Select((s, i) => (i + 1) + ". " + s);
+            LeaderText.Text = students.FirstOrDefault(s => s.Id == leaderId)?.FullName ?? "нет";
+            Students.ItemsSource = students.Select((s, i) => (i + 1) + ". " + s.FullName);
+            _students = students;
             Students.SelectedIndex = leaderId;
+            _editLeaderIdCommand = editLeaderId;
+        }
+
+        private void SetLeader_Click(object sender, RoutedEventArgs e)
+        {
+            _editLeaderIdCommand?.Invoke(_students.ElementAt(Students.SelectedIndex).Id);
         }
     }
 }

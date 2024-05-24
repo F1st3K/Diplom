@@ -30,7 +30,8 @@
             <Button Name="SetLeader"
                     FontSize="15"
                     Margin="10, 0"
-                    Content="Назначить старостой"/>
+                    Content="Назначить старостой"
+                    Click="SetLeader_Click"/>
         </StackPanel>
         
     </Grid>
