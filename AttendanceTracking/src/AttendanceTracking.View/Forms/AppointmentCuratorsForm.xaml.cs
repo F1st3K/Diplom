@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,13 +47,15 @@ namespace AttendanceTracking.View.Forms
         private IEnumerable<Propod> _prepods;
         private Action<int, int> _editCurtorGroupCommand;
 
+        private SearchService _searcher = new SearchService();
+
         public AppointmentCuratorsForm(IEnumerable<Group> groups, IEnumerable<Propod> prepods, Action<int, int> editCuratorGroup)
         {
             InitializeComponent();
             _groups = groups;
             _prepods = prepods;
             _editCurtorGroupCommand = editCuratorGroup;
-            Groups.ItemsSource = _groups.Select(g => $"{g.Name}\t-  { _prepods.FirstOrDefault(c => c.Id == g.CuratorId)?.FullName ?? "нет"}");
+            Groups.ItemsSource = _groups.Select(toStr);
             Prepods.ItemsSource = _prepods.Select((p, i) => $"{i+1}. {p.FullName}");
         }
 
@@ -84,5 +87,20 @@ namespace AttendanceTracking.View.Forms
             GroupText.Text = group.Name;
             LeaderText.Text = curator.FullName;
         }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var groups = _groups.ToList();
+            groups.Sort((x, y) => 
+            {
+                var distX = _searcher.GetLevenshteinDistance(toStr(x), SearchBox.Text);
+                var distY = _searcher.GetLevenshteinDistance(toStr(y), SearchBox.Text);
+                return distX.CompareTo(distY);
+            });
+            _groups = groups;
+            Groups.ItemsSource = _groups.Select(toStr);
+        }
+        string toStr(Group g) =>
+                    $"{g.Name}\t-  { _prepods.FirstOrDefault(c => c.Id == g.CuratorId)?.FullName ?? "нет"}";
     }
 }
