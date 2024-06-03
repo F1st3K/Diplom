@@ -19,10 +19,14 @@
         <StackPanel 
                  Grid.Column="0"
                  Grid.Row="1">
+            <TextBlock>Поиск:</TextBlock>
             <TextBox Name="SearchBox" 
                      TextChanged="SearchBox_TextChanged"/>
-            <ListBox Name="Groups"
+            <ScrollViewer
+                VerticalScrollBarVisibility="Auto">
+                <ListBox Name="Groups"
                  SelectionChanged="Groups_SelectionChanged"/>
+            </ScrollViewer>
         </StackPanel>
         
 

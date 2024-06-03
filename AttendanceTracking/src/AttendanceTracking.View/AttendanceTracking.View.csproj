@@ -71,8 +71,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\AccountsCreateForm.xaml.cs">
+      <DependentUpon>AccountsCreateForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountsEditForm.xaml.cs">
+      <DependentUpon>AccountsEditForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AccountsViewForm.xaml.cs">
+      <DependentUpon>AccountsViewForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Page Include="Components\AditionMonthTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AccountsCreateForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AccountsEditForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AccountsViewForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,6 +213,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Forms\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Forms\delete.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Forms\edit.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
