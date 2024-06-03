@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Components;
+using AttendanceTracking.View.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,14 @@ namespace AttendanceTracking.View.Forms
     {
         private MonthTable MonthTable;
 
-        private Func<DateTime, IEnumerable<MonthTable.Value>> _getHoursQuery;
-        private Action<MonthTable.Value> _editHoursCommand;
+        private Func<DateTime, IEnumerable<Attendens>> _getHoursQuery;
+        private Action<Attendens> _editHoursCommand;
 
         public AttendanceAccountingForm(
             string groupName,
             IEnumerable<string> students,
-            Func<DateTime, IEnumerable<MonthTable.Value>> getHoursQuery,
-            Action<MonthTable.Value> editHoursCommand)
+            Func<DateTime, IEnumerable<Attendens>> getHoursQuery,
+            Action<Attendens> editHoursCommand)
         {
             InitializeComponent();
             TextGroup.Text = groupName;
@@ -51,7 +52,7 @@ namespace AttendanceTracking.View.Forms
             MonthDataGrid.Children.Add(MonthTable);
         }
 
-        private void MonthTable_ChangeHours(object sender, MonthTable.Value e)
+        private void MonthTable_ChangeHours(object sender, Attendens e)
         {
             _editHoursCommand?.Invoke(e);
         }

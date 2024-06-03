@@ -71,6 +71,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\People.cs" />
+    <Compile Include="Entities\Prepod.cs" />
+    <Compile Include="Entities\Student.cs" />
+    <Compile Include="Entities\AttendensesOnMonth.cs" />
+    <Compile Include="Entities\Attendens.cs" />
     <Compile Include="Forms\AccountsCreateForm.xaml.cs">
       <DependentUpon>AccountsCreateForm.xaml</DependentUpon>
     </Compile>

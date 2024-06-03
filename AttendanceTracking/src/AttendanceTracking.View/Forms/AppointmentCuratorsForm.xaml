@@ -19,9 +19,11 @@
         <StackPanel 
                  Grid.Column="0"
                  Grid.Row="1">
-            <TextBlock>Поиск:</TextBlock>
-            <TextBox Name="SearchBox" 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock>Поиск:</TextBlock>
+                <TextBox Name="SearchBox"
                      TextChanged="SearchBox_TextChanged"/>
+            </StackPanel>
             <ScrollViewer
                 VerticalScrollBarVisibility="Auto">
                 <ListBox Name="Groups"

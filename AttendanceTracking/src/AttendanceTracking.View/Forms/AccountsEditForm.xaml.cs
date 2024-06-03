@@ -1,4 +1,5 @@
-﻿using AttendanceTracking.View.Services;
+﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,14 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AccountsEditForm : Window
     {
-        public delegate void EditHandler(AccountsViewForm.Account account);
+        public delegate void EditHandler(Account account);
         public event EditHandler Edited;
 
         private HashService _hasher = new HashService();
 
-        private AccountsViewForm.Account _account;
+        private Account _account;
 
-        public AccountsEditForm(AccountsViewForm.Account account)
+        public AccountsEditForm(Account account)
         {
             _account = account;
             InitializeComponent();

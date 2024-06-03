@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Entities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -23,37 +24,17 @@ namespace AttendanceTracking.View.Components
     /// </summary>
     public partial class MonthTable : UserControl
     {
-        public class Value
-        {
-            public int RowIndex { get; private set; }
-            public int Day { get; private set; }
-            public int Hours { get; private set; }
-            private bool _isExcused;
-            public bool IsExcused => _isExcused ? Hours > 0 : false;
-            public Value(int rowIndex, int day, int hours, bool isExcused)
-            {
-                if (rowIndex < 0)
-                    throw new ArgumentException("rowIndex must be more zero");
-                if (day < 0)
-                    throw new ArgumentException("day must be more zero");
-                if (hours < 0)
-                    throw new ArgumentException("hours must be more zero");
-                RowIndex = rowIndex;
-                Day = day;
-                Hours = hours;
-                _isExcused = isExcused;
-            }
-        }
+        
 
-        public delegate void ChangeHoursHandler(object sender, Value e);
+        public delegate void ChangeHoursHandler(object sender, Attendens e);
 
         public event ChangeHoursHandler ChangeHours;
 
         private int[] _holidays;
-        private Value[] _values;
+        private Attendens[] _values;
         private DataTable _source;
 
-        public static MonthTable Create(DateTime date, int rows, params Value[] values)
+        public static MonthTable Create(DateTime date, int rows, params Attendens[] values)
         {
             var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
 
@@ -75,10 +56,10 @@ namespace AttendanceTracking.View.Components
             return new MonthTable(source, values, holidays.ToArray());
         }
 
-        public MonthTable(List<List<string>> source, Value[] values = null, params int[] holidays)
+        public MonthTable(List<List<string>> source, Attendens[] values = null, params int[] holidays)
         {
             _holidays = holidays;
-            _values = values ?? new Value[0];
+            _values = values ?? new Attendens[0];
             _source = new DataTable();
             for (int i = 1; i <= source.First().Count; i++)
                 _source.Columns.Add(new DataColumn(i.ToString()));
@@ -155,7 +136,7 @@ namespace AttendanceTracking.View.Components
                     cell.Foreground = Brushes.Black;
                 }
 
-                ChangeHours?.Invoke(sender, new Value(row, column + 1, number, cell.Background == Brushes.Green));
+                ChangeHours?.Invoke(sender, new Attendens(row, column + 1, number, cell.Background == Brushes.Green));
             }
         }
 
@@ -228,7 +209,7 @@ namespace AttendanceTracking.View.Components
 
             int number = int.Parse(((TextBlock)cell.Content).Text);
 
-            ChangeHours?.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green));
+            ChangeHours?.Invoke(sender, new Attendens(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green));
         }
 
         private void ContextEditToUnexcused_Click(object sender, RoutedEventArgs e)
@@ -242,7 +223,7 @@ namespace AttendanceTracking.View.Components
 
             int number = int.Parse(((TextBlock)cell.Content).Text);
 
-            ChangeHours?.Invoke(sender, new Value(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green)); ;
+            ChangeHours?.Invoke(sender, new Attendens(rowIndex, columnIndex + 1, number, cell.Background == Brushes.Green)); ;
         }
     }
 }

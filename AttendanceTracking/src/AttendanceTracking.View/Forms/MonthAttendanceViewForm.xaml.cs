@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Components;
+using AttendanceTracking.View.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,12 @@ namespace AttendanceTracking.View.Forms
     {
         private MonthTable MonthTable;
 
-        private Func<DateTime, IEnumerable<MonthTable.Value>> _getHoursQuery;
+        private Func<DateTime, IEnumerable<Attendens>> _getHoursQuery;
 
         public MonthAttendanceViewForm(
             string groupName,
             IEnumerable<string> students,
-            Func<DateTime, IEnumerable<MonthTable.Value>> getHoursQuery)
+            Func<DateTime, IEnumerable<Attendens>> getHoursQuery)
         {
             InitializeComponent();
             TextGroup.Text = groupName;

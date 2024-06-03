@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,16 +20,7 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AppointmentLeaderForm : Window
     {
-        public class Student
-        {
-            public int Id;
-            public string FullName;
-            public Student(int id, string fullName)
-            {
-                Id = id;
-                FullName = fullName;
-            }
-        }
+        
 
         private Action<int> _editLeaderIdCommand;
         private IEnumerable<Student> _students;

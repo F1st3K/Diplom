@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,57 +20,9 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AccountsViewForm : Window
     {
-        public class People
-        {
-            public int Id { get; }
+        
 
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Patronomic { get; set; }
-            public string FullName => $"{LastName} {FirstName} {Patronomic}";
-
-
-            public IEnumerable<string> Roles { get; }
-            public string TextRoles => string.Join(", ", Roles);
-
-
-            public People(int id, string firstName, string lastName, string patronomic, IEnumerable<string> roles)
-            {
-                Id = id;
-
-                FirstName = firstName;
-                LastName = lastName;
-                Patronomic = patronomic;
-
-                Roles = roles;
-            }
-        }
-
-        public class Account
-        {
-            public string Login { get; set; }
-
-            public bool IsActive { get; set; }
-            public string Status => IsActive ? "Активирована" : "Не активирована";
-
-            public string Hash { get; set; }
-
-            public People People { get; }
-            public int Id => People.Id;
-            public string FullName => People.FullName;
-            public string TextRoles => People.TextRoles;
-
-
-
-            public Account(People people, string login, string hash, bool isActive)
-            {
-                People = people;
-
-                Login = login;
-                IsActive = isActive;
-                Hash = hash;
-            }
-        }
+        
 
         
 

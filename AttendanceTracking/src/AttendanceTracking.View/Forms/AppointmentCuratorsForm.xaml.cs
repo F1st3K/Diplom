@@ -1,4 +1,5 @@
-﻿using AttendanceTracking.View.Services;
+﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,36 +21,16 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AppointmentCuratorsForm : Window
     {
-        public class Propod
-        {
-            public int Id;
-            public string FullName;
-            public Propod(int id, string fullName)
-            {
-                Id = id;
-                FullName = fullName;
-            }
-        }
-        public class Group
-        {
-            public int Id;
-            public string Name;
-            public int CuratorId;
-            public Group(int id, int curatorId, string name)
-            {
-                Id = id;
-                CuratorId = curatorId;
-                Name = name;
-            }
-        }
+        
+        
 
         private IEnumerable<Group> _groups;
-        private IEnumerable<Propod> _prepods;
+        private IEnumerable<Prepod> _prepods;
         private Action<int, int> _editCurtorGroupCommand;
 
         private SearchService _searcher = new SearchService();
 
-        public AppointmentCuratorsForm(IEnumerable<Group> groups, IEnumerable<Propod> prepods, Action<int, int> editCuratorGroup)
+        public AppointmentCuratorsForm(IEnumerable<Group> groups, IEnumerable<Prepod> prepods, Action<int, int> editCuratorGroup)
         {
             InitializeComponent();
             _groups = groups;

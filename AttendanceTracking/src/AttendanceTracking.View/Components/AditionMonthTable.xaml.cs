@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,29 +21,16 @@ namespace AttendanceTracking.View.Components
     /// </summary>
     public partial class AditionMonthTable : UserControl
     {
-        public class Value
-        {
-            public int Excused { get; private set; }
-            public int Unexcused { get; private set; }
-            public Value(int excused, int unxcused)
-            {
-                if (excused < 0)
-                    throw new ArgumentException("excused must be more zero");
-                if (unxcused < 0)
-                    throw new ArgumentException("uxcused must be more zero");
-                Excused = excused;
-                Unexcused = unxcused;
-            }
-        }
+        
 
-        public AditionMonthTable(string month, IEnumerable<Value> attendenses)
+        public AditionMonthTable(string month, IEnumerable<AttendensesOnMonth> attendenses)
         {
             InitializeComponent();
             MonthName.Text = month;
                 
                 
             AditionalTable.ItemsSource = attendenses
-                .Concat(new Value[] { new Value(
+                .Concat(new AttendensesOnMonth[] { new AttendensesOnMonth(
                     attendenses.Sum(s => s.Excused),
                     attendenses.Sum(s => s.Unexcused)) 
                 })

@@ -1,4 +1,5 @@
-﻿using AttendanceTracking.View.Services;
+﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +21,17 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AccountsCreateForm : Window
     {
-        public delegate void CreateHandler(AccountsViewForm.Account people);
+        public delegate void CreateHandler(Account people);
         public event CreateHandler Created;
 
-        private IEnumerable<AccountsViewForm.People> _peoples;
-        private AccountsViewForm.People _selectedPeople;
+        private IEnumerable<People> _peoples;
+        private People _selectedPeople;
 
         private HashService _hasher = new HashService();
 
         private SearchService _searcher = new SearchService();
 
-        public AccountsCreateForm(IEnumerable<AccountsViewForm.People> peoples)
+        public AccountsCreateForm(IEnumerable<People> peoples)
         {
             _peoples = peoples;
 
@@ -61,11 +62,11 @@ namespace AttendanceTracking.View.Forms
             _peoples = peoples;
             People.ItemsSource = _peoples.Select(p => toStr(p));
         }
-        string toStr(AccountsViewForm.People p) => $"{p.FullName} ({p.TextRoles})";
+        string toStr(People p) => $"{p.FullName} ({p.TextRoles})";
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
-            Created?.Invoke(new AccountsViewForm.Account(_selectedPeople, Login.Text, _hasher.Hash(Password.Text), false));
+            Created?.Invoke(new Account(_selectedPeople, Login.Text, _hasher.Hash(Password.Text), false));
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)

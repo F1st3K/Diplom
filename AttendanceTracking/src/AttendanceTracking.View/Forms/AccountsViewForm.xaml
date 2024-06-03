@@ -17,6 +17,22 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>Поиск:</TextBlock>
+            <TextBox Name="SearchBox"
+                     />
+            <TextBlock>Фильтр по ролям:</TextBlock>
+            <ComboBox Name="RoleBox">
+                <ComboBoxItem Content="Все" IsSelected="True"/>
+                <ComboBoxItem Content="Администраторы"/>
+                <ComboBoxItem Content="Работники УЧ"/>
+                <ComboBoxItem Content="Преподаватели"/>
+                <ComboBoxItem Content="Кураторы"/>
+                <ComboBoxItem Content="Студенты"/>
+                <ComboBoxItem Content="Старосты"/>
+            </ComboBox>
+        </StackPanel>
+
         <DataGrid Name="StudentsTable"
                       Grid.Row="1"
                       Grid.Column="0"

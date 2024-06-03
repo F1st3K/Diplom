@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Components;
+using AttendanceTracking.View.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,14 +28,14 @@ namespace AttendanceTracking.View.Forms
                 ((DateTime.Now.Month > 8 ? DateTime.Now.Year : DateTime.Now.Year - 1) - 3)
             };
         private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
-        private Func<DateTime, IEnumerable<AditionMonthTable.Value>> _getAttendenceMonthQuery;
+        private Func<DateTime, IEnumerable<AttendensesOnMonth>> _getAttendenceMonthQuery;
 
         public class AttendenceMonth
         {
             public DateTime Month { get; private set; }
-            public IEnumerable<AditionMonthTable.Value> Attendence { get; private set; }
+            public IEnumerable<AttendensesOnMonth> Attendence { get; private set; }
 
-            public AttendenceMonth(DateTime month, IEnumerable<AditionMonthTable.Value> attendence)
+            public AttendenceMonth(DateTime month, IEnumerable<AttendensesOnMonth> attendence)
             {
                 Month = month;
                 Attendence = attendence;
@@ -45,7 +46,7 @@ namespace AttendanceTracking.View.Forms
         public AttendanceViewForm(
             string groupName,
             IEnumerable<string> students,
-            Func<DateTime, IEnumerable<AditionMonthTable.Value>> getAttendenceMonthQuery)
+            Func<DateTime, IEnumerable<AttendensesOnMonth>> getAttendenceMonthQuery)
         {
             InitializeComponent();
             TextGroup.Text = groupName;
@@ -98,7 +99,7 @@ namespace AttendanceTracking.View.Forms
                         excused += m.Excused;
                         unexcused += m.Unexcused;
                     }
-                    return new AditionMonthTable.Value(excused, unexcused);
+                    return new AttendensesOnMonth(excused, unexcused);
                 });
 
             AditionalTable.ItemsSource = enumerableAttendence
