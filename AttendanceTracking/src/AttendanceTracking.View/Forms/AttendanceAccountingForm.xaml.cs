@@ -1,5 +1,6 @@
 ﻿using AttendanceTracking.View.Components;
 using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,17 +27,17 @@ namespace AttendanceTracking.View.Forms
         private Func<DateTime, IEnumerable<Attendens>> _getHoursQuery;
         private Action<Attendens> _editHoursCommand;
 
-        public AttendanceAccountingForm(
-            string groupName,
-            IEnumerable<string> students,
-            Func<DateTime, IEnumerable<Attendens>> getHoursQuery,
-            Action<Attendens> editHoursCommand)
+        public AttendanceAccountingForm(int groupId)
         {
+            var studentsService = new GroupService();
+            var attendencesService = new AttendensService();
+
             InitializeComponent();
-            TextGroup.Text = groupName;
-            StudentsTable.ItemsSource = students.Select((s, i) => new { Id = i + 1, FullName = s });
-            _getHoursQuery = getHoursQuery;
-            _editHoursCommand = editHoursCommand;
+            TextGroup.Text = studentsService.GetGroupName(groupId);
+            StudentsTable.ItemsSource = studentsService.GetStudentsByGroup(groupId)
+                .Select((s, i) => new { Id = i + 1, FullName = s });
+            _getHoursQuery = m => attendencesService.GetAttendenses(m, groupId);
+            _editHoursCommand = a => attendencesService.EditAttendens(a, groupId);
             MonthSwitcher.SelectedIndex = 0;
         }
 

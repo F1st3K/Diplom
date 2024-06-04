@@ -50,6 +50,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\AutoRepairShop\src\AutoRepairShop.Data\bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlBackup">
+      <HintPath>..\..\..\..\AutoRepairShop\src\AutoRepairShop.Data\bin\Debug\MySqlBackup.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -71,10 +78,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\DataContext.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\People.cs" />
     <Compile Include="Entities\Prepod.cs" />
+    <Compile Include="Entities\Roles.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\AttendensesOnMonth.cs" />
     <Compile Include="Entities\Attendens.cs" />
@@ -87,8 +96,11 @@
     <Compile Include="Forms\AccountsViewForm.xaml.cs">
       <DependentUpon>AccountsViewForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AttendenceService.cs" />
     <Compile Include="Services\HashService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\StudentService.cs" />
     <Page Include="Components\AditionMonthTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -233,5 +245,6 @@
   <ItemGroup>
     <Resource Include="Forms\edit.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

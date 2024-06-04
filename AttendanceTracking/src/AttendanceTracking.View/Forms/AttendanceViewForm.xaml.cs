@@ -1,5 +1,6 @@
 ﻿using AttendanceTracking.View.Components;
 using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,17 +44,17 @@ namespace AttendanceTracking.View.Forms
         }
         private List<AttendenceMonth> Months = new List<AttendenceMonth>();
 
-        public AttendanceViewForm(
-            string groupName,
-            IEnumerable<string> students,
-            Func<DateTime, IEnumerable<AttendensesOnMonth>> getAttendenceMonthQuery)
+        public AttendanceViewForm(int groupId)
         {
+            var studentsService = new GroupService();
+            var attendencesService = new AttendensService();
+
             InitializeComponent();
-            TextGroup.Text = groupName;
-            StudentsTable.ItemsSource = students
+            TextGroup.Text = studentsService.GetGroupName(groupId);
+            StudentsTable.ItemsSource = studentsService.GetStudentsByGroup(groupId)
                 .Select((s, i) => new { Id = i + 1, FullName = s })
                 .Concat(new object[] { new { FullName = "Всего пропусков:" } });
-            _getAttendenceMonthQuery = getAttendenceMonthQuery;
+            _getAttendenceMonthQuery = m => attendencesService.GetAttendensesOnMonth(m, groupId);
             ComboYear.ItemsSource = Years.Select(y => $"{y} - {y + 1}");
             ComboYear.SelectedIndex = 0;
             ComboSemestr.SelectionChanged += InitMonthTables;

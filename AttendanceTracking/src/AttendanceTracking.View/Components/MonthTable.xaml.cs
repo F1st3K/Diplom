@@ -53,15 +53,15 @@ namespace AttendanceTracking.View.Components
             }
 
             var str = new string[0];
-            return new MonthTable(source, values, holidays.ToArray());
+            return new MonthTable(daysInMonth, source, values, holidays.ToArray());
         }
 
-        public MonthTable(List<List<string>> source, Attendens[] values = null, params int[] holidays)
+        public MonthTable(int days, List<List<string>> source, Attendens[] values = null, params int[] holidays)
         {
             _holidays = holidays;
             _values = values ?? new Attendens[0];
             _source = new DataTable();
-            for (int i = 1; i <= source.First().Count; i++)
+            for (int i = 1; i <= days; i++)
                 _source.Columns.Add(new DataColumn(i.ToString()));
             source.ForEach(r => _source.Rows.Add(r.ToArray()));
             InitializeComponent();

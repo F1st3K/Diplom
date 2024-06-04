@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,6 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class AccountsViewForm : Window
     {
-        
-
-        
-
-        
 
         private List<Account> _accounts;
 
@@ -33,19 +29,17 @@ namespace AttendanceTracking.View.Forms
         private Func<Account, Account> _createCommand;
         private Func<IEnumerable<People>> _getPeoplesQuery;
 
-        public AccountsViewForm(
-            IEnumerable<Account> accounts,
-            Action<Account> editAccount,
-            Action<Account> deleteAccount,
-            Func<Account, Account> createAccount,
-            Func<IEnumerable<People>> getPeoples
-            )
+        private SearchService _searcher = new SearchService();
+
+        public AccountsViewForm()
         {
-            _accounts = accounts.ToList();
-            _editCommand = editAccount;
-            _deleteComand = deleteAccount;
-            _createCommand = createAccount;
-            _getPeoplesQuery = getPeoples;
+            var accountService = new AccountService();
+
+            _accounts = accountService.GetAccounts().ToList();
+            _editCommand = a => accountService.EditAccount(a);
+            _deleteComand = a => accountService.DeleteAccount(a);
+            _createCommand = a => accountService.CreateAccount(a);
+            _getPeoplesQuery = () => accountService.GetPeoples();
 
             InitializeComponent();
 
@@ -66,7 +60,7 @@ namespace AttendanceTracking.View.Forms
             editForm.Edited += a =>
             {
                 _editCommand?.Invoke(a);
-                StudentsTable.ItemsSource = _accounts.Select(p => p);
+                StudentsTable.ItemsSource = filtered(_accounts);
                 StudentsTable.Focus();
             };
         }
@@ -81,7 +75,7 @@ namespace AttendanceTracking.View.Forms
             if (result == MessageBoxResult.Yes)
             {
                 _accounts.Remove(account);
-                StudentsTable.ItemsSource = _accounts.Select(p => p);
+                StudentsTable.ItemsSource = filtered(_accounts);
 
                 _deleteComand?.Invoke(account);
             }
@@ -100,11 +94,47 @@ namespace AttendanceTracking.View.Forms
                 account = _createCommand?.Invoke(account);
 
                 _accounts.Insert(0, account);
-                StudentsTable.ItemsSource = _accounts.Select(p => p);
+                RoleBox.SelectedIndex = 0;
+                StudentsTable.ItemsSource = _accounts;
                 StudentsTable.SelectedIndex = 0;
                 StudentsTable.Focus();
             };
 
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _accounts.Sort((x, y) =>
+            {
+                var distX = _searcher.GetLevenshteinDistance($"{x.FullName} {x.Login}", SearchBox.Text);
+                var distY = _searcher.GetLevenshteinDistance($"{y.FullName} {y.Login}", SearchBox.Text);
+                return distX.CompareTo(distY);
+            });
+            StudentsTable.ItemsSource = filtered(_accounts);
+        }
+
+        private Func<IEnumerable<Account>, IEnumerable<Account>> filtered;
+        private void RoleBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (RoleBox.SelectedIndex)
+            {
+                case 1:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Administrator)); break;
+                case 2:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Secretary)); break;
+                case 3:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Teacher)); break;
+                case 4:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Curator)); break;
+                case 5:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Student)); break;
+                case 6:
+                    filtered = acs => acs.Where(a => a.People.Roles.Contains(Roles.Role.Leader)); break;
+                default:
+                    filtered = acs => acs.Select(a => a); break;
+            }
+            if (StudentsTable != null)
+                StudentsTable.ItemsSource = filtered(_accounts);
         }
     }
 

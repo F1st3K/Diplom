@@ -20,9 +20,10 @@
         <StackPanel Orientation="Horizontal">
             <TextBlock>Поиск:</TextBlock>
             <TextBox Name="SearchBox"
-                     />
+                     TextChanged="SearchBox_TextChanged"/>
             <TextBlock>Фильтр по ролям:</TextBlock>
-            <ComboBox Name="RoleBox">
+            <ComboBox Name="RoleBox"
+                      SelectionChanged="RoleBox_SelectionChanged">
                 <ComboBoxItem Content="Все" IsSelected="True"/>
                 <ComboBoxItem Content="Администраторы"/>
                 <ComboBoxItem Content="Работники УЧ"/>
@@ -31,6 +32,11 @@
                 <ComboBoxItem Content="Студенты"/>
                 <ComboBoxItem Content="Старосты"/>
             </ComboBox>
+
+            <Button Grid.Row="2"
+                HorizontalAlignment="Right"
+                Content="| + | Создать учетную запись"
+                Click="CreateClick"/>
         </StackPanel>
 
         <DataGrid Name="StudentsTable"
@@ -97,14 +103,5 @@
 
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button Grid.Row="2"
-            FontSize="24pt"
-            Width="50pt"
-            Height="40pt"
-            Margin="0, 10, 0, 0"
-            HorizontalAlignment="Right"
-            Content="+"
-            Click="CreateClick"/>
     </Grid>
 </Window>

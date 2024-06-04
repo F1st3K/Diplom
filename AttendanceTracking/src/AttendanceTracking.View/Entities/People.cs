@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AttendanceTracking.View.Entities
 {
@@ -16,11 +13,11 @@ namespace AttendanceTracking.View.Entities
         public string FullName => $"{LastName} {FirstName} {Patronomic}";
 
 
-        public IEnumerable<string> Roles { get; }
-        public string TextRoles => string.Join(", ", Roles);
+        public IEnumerable<Roles.Role> Roles { get; }
+        public string TextRoles => string.Join(", ", Roles.Select(r => r.ToTextRole()));
 
 
-        public People(int id, string firstName, string lastName, string patronomic, IEnumerable<string> roles)
+        public People(int id, string firstName, string lastName, string patronomic, IEnumerable<Roles.Role> roles)
         {
             Id = id;
 

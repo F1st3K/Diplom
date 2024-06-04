@@ -30,12 +30,14 @@ namespace AttendanceTracking.View.Forms
 
         private SearchService _searcher = new SearchService();
 
-        public AppointmentCuratorsForm(IEnumerable<Group> groups, IEnumerable<Prepod> prepods, Action<int, int> editCuratorGroup)
+        public AppointmentCuratorsForm()
         {
+            var studentsService = new GroupService();
+
             InitializeComponent();
-            _groups = groups;
-            _prepods = prepods;
-            _editCurtorGroupCommand = editCuratorGroup;
+            _groups = studentsService.GetAllGroups();
+            _prepods = studentsService.GetAllPrepods();
+            _editCurtorGroupCommand = (gi, pi) => studentsService.EditPrepodGroup(gi, pi);
             Groups.ItemsSource = _groups.Select(toStr);
             Prepods.ItemsSource = _prepods.Select((p, i) => $"{i+1}. {p.FullName}");
         }

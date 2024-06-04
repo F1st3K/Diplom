@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,15 +26,18 @@ namespace AttendanceTracking.View.Forms
         private Action<int> _editLeaderIdCommand;
         private IEnumerable<Student> _students;
 
-        public AppointmentLeaderForm(string group, IEnumerable<Student> students, int leaderId, Action<int> editLeaderId)
+        public AppointmentLeaderForm(int groupId)
         {
+            var studentsService = new GroupService();
+
             InitializeComponent();
-            GroupText.Text = group;
-            LeaderText.Text = students.FirstOrDefault(s => s.Id == leaderId)?.FullName ?? "нет";
-            Students.ItemsSource = students.Select((s, i) => (i + 1) + ". " + s.FullName);
-            _students = students;
-            Students.SelectedIndex = leaderId;
-            _editLeaderIdCommand = editLeaderId;
+            GroupText.Text = studentsService.GetGroupName(groupId);
+            LeaderText.Text = studentsService.GetStudentsByGroup(groupId)
+                .FirstOrDefault(s => s.Id == studentsService.GetLeaderIdByGroup(groupId))?.FullName ?? "нет";
+            _students = studentsService.GetStudentsByGroup(groupId);
+            Students.ItemsSource = _students.Select((s, i) => (i + 1) + ". " + s.FullName);
+            Students.SelectedIndex = studentsService.GetLeaderIdByGroup(groupId);
+            _editLeaderIdCommand = li => studentsService.EditLeaderIdByGroup(li, groupId);
         }
 
         private void SetLeader_Click(object sender, RoutedEventArgs e)
