@@ -8,8 +8,8 @@ namespace AttendanceTracking.View.Entities
 {
     public class Student
     {
-        public int Id;
-        public string FullName;
+        public int Id { get; private set; }
+        public string FullName { get; private set; }
         public Student(int id, string fullName)
         {
             Id = id;

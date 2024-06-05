@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AttendanceTracking.View.Entities
 {
     public class Attendens
     {
-        public int RowIndex { get; private set; }
+        public int StudentIndex { get; private set; }
         public int Day { get; private set; }
         public int Hours { get; private set; }
         private bool _isExcused;
@@ -21,7 +17,7 @@ namespace AttendanceTracking.View.Entities
                 throw new ArgumentException("day must be more zero");
             if (hours < 0)
                 throw new ArgumentException("hours must be more zero");
-            RowIndex = rowIndex;
+            StudentIndex = rowIndex;
             Day = day;
             Hours = hours;
             _isExcused = isExcused;

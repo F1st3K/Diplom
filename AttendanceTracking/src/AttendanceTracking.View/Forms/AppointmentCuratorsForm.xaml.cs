@@ -37,7 +37,7 @@ namespace AttendanceTracking.View.Forms
             InitializeComponent();
             _groups = studentsService.GetAllGroups();
             _prepods = studentsService.GetAllPrepods();
-            _editCurtorGroupCommand = (gi, pi) => studentsService.EditPrepodGroup(gi, pi);
+            _editCurtorGroupCommand = (gi, pi) => studentsService.EditCuratorGroup(gi, pi);
             Groups.ItemsSource = _groups.Select(toStr);
             Prepods.ItemsSource = _prepods.Select((p, i) => $"{i+1}. {p.FullName}");
         }

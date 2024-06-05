@@ -13,7 +13,7 @@ namespace AttendanceTracking.View.Entities
         public string FullName => $"{LastName} {FirstName} {Patronomic}";
 
 
-        public IEnumerable<Roles.Role> Roles { get; }
+        public IEnumerable<Roles.Role> Roles { get; set; }
         public string TextRoles => string.Join(", ", Roles.Select(r => r.ToTextRole()));
 
 

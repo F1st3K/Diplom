@@ -44,6 +44,14 @@
 
             <TextBox Name="Login"/>
             <TextBox Name="Password"/>
+            <TextBlock>
+                <CheckBox Name="AddToSecretar"/>
+                Добавить в группу работников учебной части
+            </TextBlock>
+            <TextBlock>
+                <CheckBox Name="AddToAdmin"/>
+                Добавить в группу администраторов
+            </TextBlock>
             <Button Content="Создать УЗ"
                 Click="CreateClick"/>
             <Button Content="Обратно к УЗ"

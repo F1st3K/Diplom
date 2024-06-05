@@ -34,7 +34,7 @@ namespace AttendanceTracking.View.Forms
             InitializeComponent();
             TextGroup.Text = studentsService.GetGroupName(groupId);
             StudentsTable.ItemsSource = studentsService.GetStudentsByGroup(groupId)
-                .Select((s, i) => new { Id = i + 1, FullName = s });
+                .Select((s, i) => new { Id = i + 1, FullName = s.FullName });
             _getHoursQuery = m => attendencesService.GetAttendenses(m, groupId);
             MonthSwitcher.SelectedIndex = 0;
         }

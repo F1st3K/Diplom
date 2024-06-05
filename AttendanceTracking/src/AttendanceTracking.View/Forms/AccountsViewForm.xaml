@@ -39,7 +39,7 @@
                 Click="CreateClick"/>
         </StackPanel>
 
-        <DataGrid Name="StudentsTable"
+        <DataGrid Name="AccountsTable"
                       Grid.Row="1"
                       Grid.Column="0"
                       IsReadOnly="True"

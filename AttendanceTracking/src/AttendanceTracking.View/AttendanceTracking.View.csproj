@@ -96,11 +96,18 @@
     <Compile Include="Forms\AccountsViewForm.xaml.cs">
       <DependentUpon>AccountsViewForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ImportForm.xaml.cs">
+      <DependentUpon>ImportForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PasswordForm.xaml.cs">
+      <DependentUpon>PasswordForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Services\AttendenceService.cs" />
+    <Compile Include="Services\AttendensService.cs" />
     <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\SearchService.cs" />
-    <Compile Include="Services\StudentService.cs" />
+    <Compile Include="Services\GroupService.cs" />
     <Page Include="Components\AditionMonthTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +144,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\ImportForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\MonthAttendanceViewForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\PasswordForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

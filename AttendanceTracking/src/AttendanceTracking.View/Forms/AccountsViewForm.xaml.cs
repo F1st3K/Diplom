@@ -26,7 +26,7 @@ namespace AttendanceTracking.View.Forms
 
         private Action<Account> _editCommand;
         private Action<Account> _deleteComand;
-        private Func<Account, Account> _createCommand;
+        private Action<Account> _createCommand;
         private Func<IEnumerable<People>> _getPeoplesQuery;
 
         private SearchService _searcher = new SearchService();
@@ -43,7 +43,7 @@ namespace AttendanceTracking.View.Forms
 
             InitializeComponent();
 
-            StudentsTable.ItemsSource = _accounts;
+            AccountsTable.ItemsSource = _accounts;
             
         }
 
@@ -60,8 +60,8 @@ namespace AttendanceTracking.View.Forms
             editForm.Edited += a =>
             {
                 _editCommand?.Invoke(a);
-                StudentsTable.ItemsSource = filtered(_accounts);
-                StudentsTable.Focus();
+                AccountsTable.ItemsSource = filtered(_accounts);
+                AccountsTable.Focus();
             };
         }
 
@@ -75,7 +75,7 @@ namespace AttendanceTracking.View.Forms
             if (result == MessageBoxResult.Yes)
             {
                 _accounts.Remove(account);
-                StudentsTable.ItemsSource = filtered(_accounts);
+                AccountsTable.ItemsSource = filtered(_accounts);
 
                 _deleteComand?.Invoke(account);
             }
@@ -91,13 +91,13 @@ namespace AttendanceTracking.View.Forms
             createForm.Closed += (s, ev) => Show();
             createForm.Created += account =>
             {
-                account = _createCommand?.Invoke(account);
+                _createCommand?.Invoke(account);
 
                 _accounts.Insert(0, account);
                 RoleBox.SelectedIndex = 0;
-                StudentsTable.ItemsSource = _accounts;
-                StudentsTable.SelectedIndex = 0;
-                StudentsTable.Focus();
+                AccountsTable.ItemsSource = _accounts;
+                AccountsTable.SelectedIndex = 0;
+                AccountsTable.Focus();
             };
 
         }
@@ -110,7 +110,7 @@ namespace AttendanceTracking.View.Forms
                 var distY = _searcher.GetLevenshteinDistance($"{y.FullName} {y.Login}", SearchBox.Text);
                 return distX.CompareTo(distY);
             });
-            StudentsTable.ItemsSource = filtered(_accounts);
+            AccountsTable.ItemsSource = filtered(_accounts);
         }
 
         private Func<IEnumerable<Account>, IEnumerable<Account>> filtered;
@@ -133,8 +133,8 @@ namespace AttendanceTracking.View.Forms
                 default:
                     filtered = acs => acs.Select(a => a); break;
             }
-            if (StudentsTable != null)
-                StudentsTable.ItemsSource = filtered(_accounts);
+            if (AccountsTable != null)
+                AccountsTable.ItemsSource = filtered(_accounts);
         }
     }
 

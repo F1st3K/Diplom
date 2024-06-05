@@ -30,6 +30,8 @@ namespace AttendanceTracking.View.Components
 
         public event ChangeHoursHandler ChangeHours;
 
+        public DateTime Month;
+
         private int[] _holidays;
         private Attendens[] _values;
         private DataTable _source;
@@ -79,6 +81,8 @@ namespace AttendanceTracking.View.Components
 
         private void Table_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
+            try
+            {
             DataGrid dataGrid = sender as DataGrid;
             if (dataGrid != null)
             {
@@ -97,10 +101,15 @@ namespace AttendanceTracking.View.Components
                     }
                 }
             }
+
+            }
+            catch (Exception)
+            { }
         }
 
         private void Table_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            try {
             var row = e.Row.GetIndex();
             var column = e.Column.DisplayIndex;
             string newValue = (e.EditingElement as TextBox).Text;
@@ -138,12 +147,17 @@ namespace AttendanceTracking.View.Components
 
                 ChangeHours?.Invoke(sender, new Attendens(row, column + 1, number, cell.Background == Brushes.Green));
             }
+
+            }
+            catch (Exception)
+            { }
         }
 
 
 
         private void Table_Loaded(object sender, RoutedEventArgs e)
         {
+            try {
             Style styleCells = new Style(typeof(DataGridCell));
             styleCells.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.White));
             styleCells.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.Black));
@@ -162,10 +176,10 @@ namespace AttendanceTracking.View.Components
 
             foreach (var v in _values)
             {
-                _source.Rows[v.RowIndex][v.Day - 1] = v.Hours.ToString();
+                _source.Rows[v.StudentIndex][v.Day - 1] = v.Hours.ToString();
                 Brush newBackgroundBrush = v.IsExcused ? Brushes.Green : Brushes.Red;
 
-                DataGridRow row = (DataGridRow)Table.ItemContainerGenerator.ContainerFromIndex(v.RowIndex);
+                DataGridRow row = (DataGridRow)Table.ItemContainerGenerator.ContainerFromIndex(v.StudentIndex);
                 DataGridCell cell = Table.Columns[v.Day - 1].GetCellContent(row).Parent as DataGridCell;
 
                 Style style = new Style(typeof(DataGridCell));
@@ -173,10 +187,14 @@ namespace AttendanceTracking.View.Components
                 style.Setters.Add(new Setter(DataGridCell.ForegroundProperty, Brushes.White));
                 cell.Style = style;
             }
+            }
+            catch (Exception)
+            { }
         }
 
         private void Table_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
+            try {
             var cell = GetCellFromCellInfo(Table.CurrentCell);
             if (cell != null)
             {
@@ -185,6 +203,10 @@ namespace AttendanceTracking.View.Components
                 ContextEditToUnexcused.Visibility = cell.Background == Brushes.Green
                     ? Visibility.Visible : Visibility.Collapsed;
             }
+
+            }
+            catch (Exception)
+            { }
         }
 
         private DataGridCell GetCellFromCellInfo(DataGridCellInfo cellInfo)

@@ -36,13 +36,15 @@ namespace AttendanceTracking.View.Forms
                 .FirstOrDefault(s => s.Id == studentsService.GetLeaderIdByGroup(groupId))?.FullName ?? "нет";
             _students = studentsService.GetStudentsByGroup(groupId);
             Students.ItemsSource = _students.Select((s, i) => (i + 1) + ". " + s.FullName);
-            Students.SelectedIndex = studentsService.GetLeaderIdByGroup(groupId);
+            Students.SelectedIndex = studentsService.GetLeaderIndexInGroup(groupId);
             _editLeaderIdCommand = li => studentsService.EditLeaderIdByGroup(li, groupId);
         }
 
         private void SetLeader_Click(object sender, RoutedEventArgs e)
         {
-            _editLeaderIdCommand?.Invoke(_students.ElementAt(Students.SelectedIndex).Id);
+            var leader = _students.ElementAt(Students.SelectedIndex);
+            LeaderText.Text = leader.FullName;
+            _editLeaderIdCommand?.Invoke(leader.Id);
         }
     }
 }

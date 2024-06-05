@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AttendanceTracking.View.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,34 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class Menu : Window
     {
-        public Menu()
+        public Menu(Account account)
         {
             InitializeComponent();
+
+            FullName.Text = account.FullName;
+            TextRoles.Text = account.TextRoles;
+
+            if (account.People.Roles.Contains(Roles.Role.Administrator))
+            {
+                AccountsButton.Visibility = Visibility.Visible;
+                ImportTablesButton.Visibility = Visibility.Visible;
+                BackupButton.Visibility = Visibility.Visible;
+            }
+            if (account.People.Roles.Contains(Roles.Role.Secretary))
+            {
+                AppointCuratorsButton.Visibility = Visibility.Visible;
+            }
+            if (account.People.Roles.Contains(Roles.Role.Curator))
+            {
+                AppointLeaderButton.Visibility = Visibility.Visible;
+                ViewAttendanceButton.Visibility = Visibility.Visible;
+                ViewMonthAttendanceButton.Visibility = Visibility.Visible;
+            }
+            if (account.People.Roles.Contains(Roles.Role.Leader))
+            {
+                AttendenceButton.Visibility = Visibility.Visible;
+            }
+
         }
     }
 }

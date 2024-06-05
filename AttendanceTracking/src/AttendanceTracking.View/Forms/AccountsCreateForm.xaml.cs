@@ -28,6 +28,7 @@ namespace AttendanceTracking.View.Forms
         private People _selectedPeople;
 
         private HashService _hasher = new HashService();
+        private RoleService _service = new RoleService();
 
         private SearchService _searcher = new SearchService();
 
@@ -66,6 +67,24 @@ namespace AttendanceTracking.View.Forms
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
+            if (AddToAdmin.IsChecked.Value &&
+                MessageBox.Show("Вы точно хотите добавить учетную запись в группу Администраторов?", "Уверены?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            { 
+                _service.AddToAdministrators(_selectedPeople.Id);
+                var roles = _selectedPeople.Roles.ToList();
+                if (roles.Contains(Roles.Role.Administrator) == false)
+                    roles.Add(Roles.Role.Administrator);
+                _selectedPeople.Roles = roles;
+            }
+            if (AddToAdmin.IsChecked.Value &&
+                MessageBox.Show("Вы точно хотите добавить учетную запись в группу Работники учебной части?", "Уверены?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                _service.AddToSecretary(_selectedPeople.Id);
+                var roles = _selectedPeople.Roles.ToList();
+                if (roles.Contains(Roles.Role.Secretary) == false)
+                    roles.Add(Roles.Role.Secretary);
+                _selectedPeople.Roles = roles;
+            }
             Created?.Invoke(new Account(_selectedPeople, Login.Text, _hasher.Hash(Password.Text), false));
         }
 

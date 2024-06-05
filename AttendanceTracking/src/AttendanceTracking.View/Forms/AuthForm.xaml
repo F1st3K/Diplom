@@ -44,12 +44,12 @@
             <Button Name="SignInButton"
                     Margin="20, 5"
                     FontSize="16"
-                    Content="Войти"
+                    Content="Войти" Click="SignInButton_Click"
             />
             <Button Name="SignOutButton"
                     Margin="20, 5"
                     FontSize="16"
-                    Content="Выйти"
+                    Content="Выйти" Click="SignOutButton_Click"
             />
         </StackPanel>
     </Grid>

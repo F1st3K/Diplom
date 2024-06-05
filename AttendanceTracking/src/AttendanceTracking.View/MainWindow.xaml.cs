@@ -27,17 +27,16 @@ namespace AttendanceTracking.View
         public MainWindow()
         {
             InitializeComponent();
-            var form = new AttendanceAccountingForm(0);
+            var form = new AttendanceAccountingForm(1);
             form.Show();
-            var formView = new MonthAttendanceViewForm(0);
+            var formView = new MonthAttendanceViewForm(1);
             formView.Show();
-            var formLeader = new AppointmentLeaderForm(0);
+            var formLeader = new AppointmentLeaderForm(1);
             formLeader.Show();
             var formCurators = new AppointmentCuratorsForm();
             formCurators.Show();
             new AuthForm().Show();
-            new Menu().Show();
-            var attView = new AttendanceViewForm(0);
+            var attView = new AttendanceViewForm(1);
             attView.Show();
             var av = new AccountsViewForm();
             av.Show();

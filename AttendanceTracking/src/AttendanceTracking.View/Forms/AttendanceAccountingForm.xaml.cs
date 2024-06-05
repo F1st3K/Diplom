@@ -25,7 +25,7 @@ namespace AttendanceTracking.View.Forms
         private MonthTable MonthTable;
 
         private Func<DateTime, IEnumerable<Attendens>> _getHoursQuery;
-        private Action<Attendens> _editHoursCommand;
+        private Action<DateTime, Attendens> _editHoursCommand;
 
         public AttendanceAccountingForm(int groupId)
         {
@@ -35,9 +35,9 @@ namespace AttendanceTracking.View.Forms
             InitializeComponent();
             TextGroup.Text = studentsService.GetGroupName(groupId);
             StudentsTable.ItemsSource = studentsService.GetStudentsByGroup(groupId)
-                .Select((s, i) => new { Id = i + 1, FullName = s });
+                .Select((s, i) => new { Id = i + 1, FullName = s.FullName });
             _getHoursQuery = m => attendencesService.GetAttendenses(m, groupId);
-            _editHoursCommand = a => attendencesService.EditAttendens(a, groupId);
+            _editHoursCommand = (m, a) => attendencesService.EditAttendens(m, a, groupId);
             MonthSwitcher.SelectedIndex = 0;
         }
 
@@ -53,26 +53,30 @@ namespace AttendanceTracking.View.Forms
             MonthDataGrid.Children.Add(MonthTable);
         }
 
+        private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+
+        public DateTime DateMonth;
+
         private void MonthTable_ChangeHours(object sender, Attendens e)
         {
-            _editHoursCommand?.Invoke(e);
+            _editHoursCommand?.Invoke(DateMonth, e);
         }
 
-        private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
+        
         private void CurrentMonth_Selected(object sender, RoutedEventArgs e)
         {
-            var currentDay = DateTime.Today;
-            InitMonthDataGrid(currentDay);
-            TextMonth.Text = russianMonths[currentDay.Month - 1];
-            TextYear.Text = currentDay.Year.ToString();
+            DateMonth = DateTime.Today;
+            InitMonthDataGrid(DateMonth);
+            TextMonth.Text = russianMonths[DateMonth.Month - 1];
+            TextYear.Text = DateMonth.Year.ToString();
         }
 
         private void PrevMonth_Selected(object sender, RoutedEventArgs e)
         {
-            var prevMonthDay = DateTime.Today.AddMonths(-1);
-            InitMonthDataGrid(prevMonthDay);
-            TextMonth.Text = russianMonths[prevMonthDay.Month - 1];
-            TextYear.Text = prevMonthDay.Year.ToString();
+            DateMonth = DateTime.Today.AddMonths(-1);
+            InitMonthDataGrid(DateMonth);
+            TextMonth.Text = russianMonths[DateMonth.Month - 1];
+            TextYear.Text = DateMonth.Year.ToString();
         }
     }
 }

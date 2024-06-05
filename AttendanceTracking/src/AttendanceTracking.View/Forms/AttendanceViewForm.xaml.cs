@@ -52,7 +52,7 @@ namespace AttendanceTracking.View.Forms
             InitializeComponent();
             TextGroup.Text = studentsService.GetGroupName(groupId);
             StudentsTable.ItemsSource = studentsService.GetStudentsByGroup(groupId)
-                .Select((s, i) => new { Id = i + 1, FullName = s })
+                .Select((s, i) => new { Id = i + 1, FullName = s.FullName })
                 .Concat(new object[] { new { FullName = "Всего пропусков:" } });
             _getAttendenceMonthQuery = m => attendencesService.GetAttendensesOnMonth(m, groupId);
             ComboYear.ItemsSource = Years.Select(y => $"{y} - {y + 1}");

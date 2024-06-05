@@ -34,7 +34,7 @@
                     Вы вошли как: <Run Name="FullName"/>
                 </TextBlock>
                 <TextBlock Grid.Column="1" HorizontalAlignment="Right">
-                    Ваша роль: <Run Name="Roles"/>
+                    Ваша роль: <Run Name="TextRoles"/>
                 </TextBlock>
             </Grid>
         </StackPanel>
@@ -51,53 +51,61 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
         >
-            <Button Name="AccountButton"
+            <Button Name="AttendenceButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Учет посещаемости"
+                    Visibility="Collapsed"
                     />
             <Button Name="ViewMonthAttendanceButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Посещаемость за месяц"
+                    Visibility="Collapsed"
                     />
             <Button Name="ViewAttendanceButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Общая посещаемость"
+                    Visibility="Collapsed"
                     />
             <Button Name="AppointLeaderButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Назначение старосты"
+                    Visibility="Collapsed"
                     />
             <Button Name="AppointCuratorsButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Назначение Кураторов"
+                    Visibility="Collapsed"
                     />
             <Button Name="AccountsButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Учетные записи"
+                    Visibility="Collapsed"
                     />
             <Button Name="ImportTablesButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Импортирование таблиц"
+                    Visibility="Collapsed"
                     />
             <Button Name="BackupButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
                     Content="Восстановление данных"
+                    Visibility="Collapsed"
                     />
             <Button Name="ExitButton"
                     Height="1.1cm"
