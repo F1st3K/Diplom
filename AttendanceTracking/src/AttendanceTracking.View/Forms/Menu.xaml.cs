@@ -1,4 +1,5 @@
 ﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,13 @@ namespace AttendanceTracking.View.Forms
     /// </summary>
     public partial class Menu : Window
     {
+        private Account _account;
+
+        private RoleService _roles = new RoleService();
+
         public Menu(Account account)
         {
+            _account = account;
             InitializeComponent();
 
             FullName.Text = account.FullName;
@@ -48,6 +54,69 @@ namespace AttendanceTracking.View.Forms
                 AttendenceButton.Visibility = Visibility.Visible;
             }
 
+        }
+
+        private void AttendenceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new AttendanceAccountingForm(_roles.GetGroupIdByStudent(_account.Id));
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void ViewMonthAttendanceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new MonthAttendanceViewForm(_roles.GetGroupIdByCurator(_account.Id));
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void ViewAttendanceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new AttendanceViewForm(_roles.GetGroupIdByCurator(_account.Id));
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void AppointLeaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new AppointmentLeaderForm(_roles.GetGroupIdByCurator(_account.Id));
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void AppointCuratorsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new AppointmentCuratorsForm();
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void AccountsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new AccountsViewForm();
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
+        }
+
+        private void ImportTablesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BackupButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

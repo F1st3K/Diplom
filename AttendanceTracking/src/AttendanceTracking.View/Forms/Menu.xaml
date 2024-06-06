@@ -57,6 +57,7 @@
                     Margin="10pt, 5pt"
                     Content="Учет посещаемости"
                     Visibility="Collapsed"
+                    Click="AttendenceButton_Click"
                     />
             <Button Name="ViewMonthAttendanceButton"
                     Height="1.1cm"
@@ -64,6 +65,7 @@
                     Margin="10pt, 5pt"
                     Content="Посещаемость за месяц"
                     Visibility="Collapsed"
+                    Click="ViewMonthAttendanceButton_Click"
                     />
             <Button Name="ViewAttendanceButton"
                     Height="1.1cm"
@@ -71,6 +73,7 @@
                     Margin="10pt, 5pt"
                     Content="Общая посещаемость"
                     Visibility="Collapsed"
+                    Click="ViewAttendanceButton_Click"
                     />
             <Button Name="AppointLeaderButton"
                     Height="1.1cm"
@@ -78,6 +81,7 @@
                     Margin="10pt, 5pt"
                     Content="Назначение старосты"
                     Visibility="Collapsed"
+                    Click="AppointLeaderButton_Click"
                     />
             <Button Name="AppointCuratorsButton"
                     Height="1.1cm"
@@ -85,6 +89,7 @@
                     Margin="10pt, 5pt"
                     Content="Назначение Кураторов"
                     Visibility="Collapsed"
+                    Click="AppointCuratorsButton_Click"
                     />
             <Button Name="AccountsButton"
                     Height="1.1cm"
@@ -92,6 +97,7 @@
                     Margin="10pt, 5pt"
                     Content="Учетные записи"
                     Visibility="Collapsed"
+                    Click="AccountsButton_Click"
                     />
             <Button Name="ImportTablesButton"
                     Height="1.1cm"
@@ -99,6 +105,7 @@
                     Margin="10pt, 5pt"
                     Content="Импортирование таблиц"
                     Visibility="Collapsed"
+                    Click="ImportTablesButton_Click"
                     />
             <Button Name="BackupButton"
                     Height="1.1cm"
@@ -106,12 +113,14 @@
                     Margin="10pt, 5pt"
                     Content="Восстановление данных"
                     Visibility="Collapsed"
+                    Click="BackupButton_Click"
                     />
             <Button Name="ExitButton"
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt"
                     Content="Выйти"
+                    Click="ExitButton_Click"
                     />
         </StackPanel>
     </Grid>

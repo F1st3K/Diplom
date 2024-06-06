@@ -95,11 +95,10 @@ namespace AttendanceTracking.View.Forms
 
                 _accounts.Insert(0, account);
                 RoleBox.SelectedIndex = 0;
-                AccountsTable.ItemsSource = _accounts;
+                AccountsTable.ItemsSource = _accounts.Select(a => a);
                 AccountsTable.SelectedIndex = 0;
                 AccountsTable.Focus();
             };
-
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)

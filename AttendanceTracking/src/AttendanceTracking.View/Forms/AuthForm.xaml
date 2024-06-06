@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Авторизация" Height="400" Width="400">
     <Grid>
-        <TextBlock 
+        <TextBlock Name="Title"
             Text="Авторизация"
             FontSize="25"
             HorizontalAlignment="Center"
@@ -26,7 +26,7 @@
                      Margin="20, 5"
                      FontSize="16"
             />
-            
+
             <TextBlock 
                 Text="Пароль:"
                 FontSize="16"
@@ -36,6 +36,26 @@
                      Margin="20, 5"
                      FontSize="16"
             />
+            <StackPanel Name="Captcha" Visibility="Collapsed">
+                <TextBlock 
+                    Text="Каптча:"
+                    FontSize="16"
+                    Margin="20, 5"
+                />
+                <TextBlock Name="ViewCaptcha"
+                           TextDecorations="Strikethrough"
+                           Margin="20, 5"
+                           FontSize="30"
+                           FontStyle="Italic"
+                           FontFamily="Segoe UI Strike"
+                           Foreground="LightGray"
+                           HorizontalAlignment="Center"
+                           Text="sfasfd"/>
+                <TextBox Name="TextCaptcha"
+                         TextChanged="TextCaptcha_TextChanged"
+                         Margin="20, 5"
+                         FontSize="16"/>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel

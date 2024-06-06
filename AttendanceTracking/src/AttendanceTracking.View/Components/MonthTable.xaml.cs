@@ -112,10 +112,11 @@ namespace AttendanceTracking.View.Components
             try {
             var row = e.Row.GetIndex();
             var column = e.Column.DisplayIndex;
-            string newValue = (e.EditingElement as TextBox).Text;
+            var t = (e.EditingElement as TextBox);
+            if (t == null) return;
+            string newValue = t?.Text;
             DataGridRow rowTable = (DataGridRow)Table.ItemContainerGenerator.ContainerFromIndex(row);
             DataGridCell cell = Table.Columns[column].GetCellContent(rowTable).Parent as DataGridCell;
-
             if (!int.TryParse(newValue, out var number) && newValue != string.Empty)
             {
                 (e.Row.Item as DataRowView).Row[column] = _cellText;
