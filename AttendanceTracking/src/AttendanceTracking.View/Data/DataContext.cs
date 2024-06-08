@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace AttendanceTracking.View.Data
 {
@@ -70,6 +71,26 @@ namespace AttendanceTracking.View.Data
             }
             _dbConection.Close();
             return table.ConvertAll(row => row.ToArray()).ToArray();
+        }
+
+        public DataTable QueryReturnTable(string query, params object[] parameters)
+        {
+            DataTable table = new DataTable();
+            try
+            {
+                _dbConection.Open();
+                MySqlCommand command = new MySqlCommand(query, _dbConection);
+                for (int i = 0; i < parameters.Length; i++)
+                    command.Parameters.AddWithValue("@" + i, parameters[i]);
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter(command);
+                dataAdapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                Logger(ex.Message + "\n" + query);
+            }
+            _dbConection.Close();
+            return table;
         }
 
         public void QueryExecute(string query, params object[] parameters)

@@ -7,6 +7,55 @@
         mc:Ignorable="d"
         Title="ImportForm" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Name="Tabs" Grid.Row="0">
+            <TabItem Header="Люди" IsSelected="True" Margin="0,0,0.2,0" Height="20" VerticalAlignment="Top">
+                <DataGrid Name="Peoples" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Администраторы">
+                <DataGrid Name="Administrators" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Работники УЧ">
+                <DataGrid Name="Secretaries" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Преподаватели">
+                <DataGrid Name="Teachers" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Группы">
+                <DataGrid Name="Groups" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Кураторы">
+                <DataGrid Name="Curators" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Студенты">
+                <DataGrid Name="Students" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Старосты">
+                <DataGrid Name="Leaders" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Пропуски">
+                <DataGrid Name="Passes" IsReadOnly="True"/>
+            </TabItem>
+        </TabControl>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button Name="Export"
+                Content="Экспорт"
+                Click="Export_Click"
+            />
+            <Button Name="Import"
+                Content="Импорт"
+                Click="Import_Click"
+            />
+            <Button Name="DeleteTable"
+                Content="Зачистить таблицу в бд"
+                Click="DeleteTable_Click"
+            />
+        </StackPanel>
     </Grid>
 </Window>

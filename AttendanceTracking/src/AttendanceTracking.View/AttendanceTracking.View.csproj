@@ -105,6 +105,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AttendensService.cs" />
     <Compile Include="Services\HashService.cs" />
+    <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\GroupService.cs" />
