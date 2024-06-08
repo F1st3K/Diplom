@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="AttendanceTracking.View.Components.MonthTable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AttendanceTracking.View.Components"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <DataGrid Name="Table"
+                  Loaded="Table_Loaded"
+                  MouseRightButtonUp="Table_MouseRightButtonUp"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserSortColumns="False"
+                  CanUserReorderColumns="False"
+                  >
+            <DataGrid.ContextMenu>
+                <ContextMenu Name="Context">
+                    <MenuItem Name="ContextEditToExcused"
+                              Header="Пометить как уважительные"
+                              Click="ContextEditToExcused_Click"></MenuItem>
+                    <MenuItem Name="ContextEditToUnexcused"
+                              Header="Пометить как неуважительные"
+                              Click="ContextEditToUnexcused_Click"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid> 
+    </Grid>
+</UserControl>
