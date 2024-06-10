@@ -91,19 +91,26 @@ namespace AttendanceTracking.View.Services
                     "peoples.first_name, " +
                     "peoples.last_name, " +
                     "peoples.patronomic, " +
-                    "CASE WHEN a.id IS NOT NULL THEN TRUE ELSE FALSE END AS admin_id, " +
-                    "CASE WHEN r.id IS NOT NULL THEN TRUE ELSE FALSE END AS secretary_id, " +
-                    "CASE WHEN t.id IS NOT NULL THEN TRUE ELSE FALSE END AS teacher_id, " +
-                    "CASE WHEN c.id IS NOT NULL THEN TRUE ELSE FALSE END AS group_curator_id, " +
-                    "CASE WHEN s.id IS NOT NULL THEN TRUE ELSE FALSE END AS student_id, " +
-                    "CASE WHEN l.id IS NOT NULL THEN TRUE ELSE FALSE END AS group_leader_id " +
-                "FROM peoples " +
-                "LEFT JOIN administrators AS a ON a.id = peoples.id " +
-                "LEFT JOIN secretaries AS r ON r.id = peoples.id " +
-                "LEFT JOIN teachers AS t ON t.id = peoples.id " +
-                "LEFT JOIN group_curators AS c ON c.id = peoples.id " +
-                "LEFT JOIN students AS s ON s.id = peoples.id " +
-                "LEFT JOIN group_leaders AS l ON l.id = peoples.id"
+                "CASE WHEN a.id IS NOT NULL THEN TRUE ELSE FALSE END AS admin_id, " +
+                "CASE WHEN r.id IS NOT NULL THEN TRUE ELSE FALSE END AS secretary_id, " +
+                "CASE WHEN t.id IS NOT NULL THEN TRUE ELSE FALSE END AS teacher_id, " +
+                "CASE WHEN c.id IS NOT NULL THEN TRUE ELSE FALSE END AS group_curator_id, " +
+                "CASE WHEN s.id IS NOT NULL THEN TRUE ELSE FALSE END AS student_id, " +
+                "CASE WHEN l.id IS NOT NULL THEN TRUE ELSE FALSE END AS group_leader_id " +
+                "FROM " +
+                    "peoples " +
+                "LEFT JOIN " +
+                    "administrators AS a ON a.id = peoples.id " +
+                "LEFT JOIN " +
+                    "secretaries AS r ON r.id = peoples.id " +
+                "LEFT JOIN " +
+                    "teachers AS t ON t.id = peoples.id " +
+                "LEFT JOIN " +
+                    "group_curators AS c ON c.id = peoples.id " +
+                "LEFT JOIN " +
+                    "students AS s ON s.id = peoples.id " +
+                "LEFT JOIN " +
+                    "group_leaders AS l ON l.id = peoples.id"
             ).ToList()
             .ConvertAll(row => new People(
                 int.Parse(row[0]),

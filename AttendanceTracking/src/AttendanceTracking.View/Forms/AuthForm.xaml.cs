@@ -1,4 +1,5 @@
-﻿using AttendanceTracking.View.Services;
+﻿using AttendanceTracking.View.Entities;
+using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +102,16 @@ namespace AttendanceTracking.View.Forms
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            var ac = _accounts.GetAccounts().FirstOrDefault(a => a.Login == LoginBox.Text);
+            var acs = _accounts.GetAccounts();
+
+            if (acs.Where(a => a.People.Roles.Contains(Roles.Role.Administrator)).Count() <= 0)
+            {
+                //CreateDefalutAdmin();
+
+                acs = _accounts.GetAccounts();
+            }
+
+            var ac = acs.FirstOrDefault(a => a.Login == LoginBox.Text);
             var isSuccsess = ac != null && ac.Hash == _hasher.Hash(PasswordBox.Password) && _succsessCaptcha;
 
             PasswordBox.Password = string.Empty;
@@ -125,11 +135,41 @@ namespace AttendanceTracking.View.Forms
                 Hide();
                 return;
             }
-
+            
             var menu = new Menu(ac);
             menu.Show();
             menu.Closed += (a, b) => Show();
             Hide();
+        }
+
+        private void CreateDefalutAdmin()
+        {
+            var first = "Администратор";
+            var last = "Главный";
+            var patr = "(Создан автоманически)";
+            Data.DataContext.GetInstance().QueryExecute(
+                "DELETE " +
+                "FROM peoples " +
+                "WHERE peoples.first_name = @0 and peoples.last_name = @1 and peoples.patronomic = @2",
+                first, last, patr
+            );
+            Data.DataContext.GetInstance().QueryExecute(
+                "INSERT " +
+                "INTO peoples (first_name, last_name, patronomic)" +
+                "VALUES (@0, @1, @2)",
+                first, last, patr
+            );
+
+            var admin = _accounts.GetPeoples().FirstOrDefault(p => p.FirstName == first && p.LastName == last && p.Patronomic == patr);
+
+            Data.DataContext.GetInstance().QueryExecute(
+                "INSERT " +
+                "INTO administrators (id)" +
+                "VALUES (@0)",
+                admin.Id
+            );
+
+            _accounts.CreateAccount(new Account(admin, LoginBox.Text, _hasher.Hash(PasswordBox.Password), false));
         }
     }
 }

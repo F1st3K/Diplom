@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\Backuper.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Group.cs" />
@@ -101,6 +102,9 @@
     </Compile>
     <Compile Include="Forms\PasswordForm.xaml.cs">
       <DependentUpon>PasswordForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RecoveryForm.xaml.cs">
+      <DependentUpon>RecoveryForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AttendensService.cs" />
@@ -196,6 +200,10 @@
     <Compile Include="Forms\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
+    <Page Include="Forms\RecoveryForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

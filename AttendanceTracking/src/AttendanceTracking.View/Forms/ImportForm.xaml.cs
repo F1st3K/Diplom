@@ -82,6 +82,7 @@ namespace AttendanceTracking.View.Forms
                 saveFileDialog.Filter = "Файлы *.csv | *.csv|All files (*.*)|*.*";
                 saveFileDialog.FilterIndex = 1;
                 saveFileDialog.RestoreDirectory = true;
+                saveFileDialog.FileName = TableNames[Tabs.SelectedIndex] + ".csv";
 
                 if (saveFileDialog.ShowDialog().Value)
                 {
