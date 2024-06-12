@@ -21,11 +21,11 @@ namespace AttendanceTracking.View.Services
         public IEnumerable<Student> GetStudentsByGroup(int groupId)
         {
             return DataContext.GetInstance().QueryReturn(
-                "SELECT p.id, p.first_name, p.last_name, p.patronomic " +
+                "SELECT p.id, p.last_name, p.first_name, p.patronomic " +
                 "FROM students " +
                 "JOIN peoples AS p ON students.id = p.id " +
                 "WHERE students.group_id = @0 " +
-                "ORDER BY p.first_name, p.last_name, p.patronomic",
+                "ORDER BY p.last_name, p.first_name, p.patronomic",
                 groupId
             ).ToList()
             .ConvertAll(row => new Student(int.Parse(row[0]), $"{row[1]} {row[2]} {row[3]}"));

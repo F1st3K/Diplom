@@ -1,0 +1,68 @@
+﻿<Window x:Class="AttendanceTracking.View.Forms.SmartImportForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
+        mc:Ignorable="d"
+        Title="Импорт\Экспорт" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Name="Tabs" Grid.Row="0">
+            <TabItem Header="Работники" IsSelected="True" Margin="0,0,0.2,0" Height="20" VerticalAlignment="Top">
+                <DataGrid Name="Workers" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Преподаватели">
+                <DataGrid Name="Teachers" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Студенты">
+                <DataGrid Name="Students" IsReadOnly="True"/>
+            </TabItem>
+        </TabControl>
+
+
+        <Grid Grid.Row="1" 
+                MinHeight="30pt">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Name="BackButton"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="В меню"
+                    Click="BackButton_Click"
+                />
+                <Button Name="DetailsButton"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="Детальный импорт\экспорт"
+                    Click="DetailsButton_Click"
+                />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft">
+                <Button Name="Export"
+                    Content="Экспорт"
+                    Click="Export_Click"
+                    Margin="5pt"
+                    Padding="5pt"
+                />
+                <Button Name="Import"
+                    Content="Импорт"
+                    Click="Import_Click"
+                    Margin="5pt"
+                    Padding="5pt"
+                />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -84,14 +84,15 @@ namespace AttendanceTracking.View.Forms
                 saveFileDialog.RestoreDirectory = true;
                 saveFileDialog.FileName = TableNames[Tabs.SelectedIndex] + ".csv";
 
-                if (saveFileDialog.ShowDialog().Value)
-                {
-                    string filePath = saveFileDialog.FileName;
+                if (!saveFileDialog.ShowDialog().Value)
+                    return;
+                
+                string filePath = saveFileDialog.FileName;
 
-                    var source = _import.ExportTable(TableNames[Tabs.SelectedIndex]).Select(r => string.Join(";", r));
+                var source = _import.ExportTable(TableNames[Tabs.SelectedIndex]).Select(r => string.Join(";", r));
 
-                    File.WriteAllLines(filePath, source, Encoding.UTF8);
-                }
+                File.WriteAllLines(filePath, source, Encoding.UTF8);
+                
             }
             catch (Exception)
             {
@@ -120,7 +121,7 @@ namespace AttendanceTracking.View.Forms
             }
             catch (Exception)
             {
-                MessageBox.Show("Файл не доступен для импорта. Проверьте его доступность и привильность, и попробуйте еще раз.", "Ошибка файла", MessageBoxButton.OK, MessageBoxImage.Stop);
+                MessageBox.Show("Файл не доступен для импорта. Проверьте его правильность, и попробуйте еще раз.", "Ошибка файла", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
 
             UpdateTables();
@@ -133,6 +134,11 @@ namespace AttendanceTracking.View.Forms
                 return;
             _import.ClearTable(TableNames[Tabs.SelectedIndex]);
             UpdateTables();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

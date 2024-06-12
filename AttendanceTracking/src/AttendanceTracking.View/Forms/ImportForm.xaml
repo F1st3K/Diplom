@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="ImportForm" Height="450" Width="800">
+        Title="Детальный импорт\экспорт" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -42,20 +42,48 @@
             </TabItem>
         </TabControl>
 
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal">
-            <Button Name="Export"
+
+        <Grid Grid.Row="1" 
+                MinHeight="30pt">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+                <Button Name="BackButton"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="Вернутся к массовому импорту"
+                    Click="BackButton_Click"
+                />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft">
+                <Button Name="Export"
                 Content="Экспорт"
                 Click="Export_Click"
+                Margin="5pt"
+                Padding="5pt"
             />
-            <Button Name="Import"
+                <Button Name="Import"
                 Content="Импорт"
                 Click="Import_Click"
+                Margin="5pt"
+                Padding="5pt"
             />
-            <Button Name="DeleteTable"
+                <Button Name="DeleteTable"
                 Content="Зачистить таблицу в бд"
                 Click="DeleteTable_Click"
+                Margin="5pt"
+                Padding="5pt"
             />
-        </StackPanel>
+            </StackPanel>
+        </Grid>
+            
+            
+        
     </Grid>
 </Window>

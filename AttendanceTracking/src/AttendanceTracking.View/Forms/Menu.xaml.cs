@@ -106,7 +106,7 @@ namespace AttendanceTracking.View.Forms
 
         private void ImportTablesButton_Click(object sender, RoutedEventArgs e)
         {
-            var form = new ImportForm();
+            var form = new SmartImportForm();
             form.Show();
             form.Closed += (s, ev) => Show();
             Hide();
