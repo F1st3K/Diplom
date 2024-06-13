@@ -124,6 +124,123 @@ namespace AttendanceTracking.View.Forms
 
         }
 
+        private void CreateReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var excelApp = new Microsoft.Office.Interop.Excel.Application();
+                var excelBook = excelApp.Workbooks.Add();
+                var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets[1];
+                var title = "Посещаемость группы " + TextGroup.Text + " за " + ComboSemestr.Text + " " + ComboYear.Text + " года";
+                excelApp.DefaultFilePath = title;
 
+                excelSheet.Cells[1, 1] = title;
+                excelSheet.Range[excelSheet.Cells[1, 1], excelSheet.Cells[1, AditionalTable.Columns.Count + StudentsTable.Columns.Count + Months.Count()*2]].Merge();
+
+                for (int i = 1; i <= StudentsTable.Columns.Count; i++)
+                {
+                    excelSheet.Cells[2, i] = StudentsTable.Columns[i - 1].Header;
+                    excelSheet.Range[excelSheet.Cells[2, i], excelSheet.Cells[3, i]].Merge();
+                }
+                for (int i = 1; i <= Months.Count()*2; i+=2)
+                {
+                    var n = (i - 1) / 2;
+                    excelSheet.Cells[2, i + StudentsTable.Columns.Count] = russianMonths[Months[n].Month.Month - 1];
+                    excelSheet.Range[excelSheet.Cells[2, i + StudentsTable.Columns.Count], excelSheet.Cells[2, i+1 + StudentsTable.Columns.Count]].Merge();
+
+                    excelSheet.Cells[3, i + StudentsTable.Columns.Count] = "уваж.";
+                    excelSheet.Cells[3, i + 1 + StudentsTable.Columns.Count] = "не уваж.";
+                }
+                excelSheet.Cells[2, 1 + StudentsTable.Columns.Count + Months.Count() * 2] = "Итого:";
+                excelSheet.Range[excelSheet.Cells[2, 1 + StudentsTable.Columns.Count + Months.Count() * 2], excelSheet.Cells[2, StudentsTable.Columns.Count + Months.Count() * 2 + 3]].Merge();
+                for (int i = 1; i <= AditionalTable.Columns.Count; i++)
+                {
+                    excelSheet.Cells[3, i + StudentsTable.Columns.Count + Months.Count()*2] = AditionalTable.Columns[i - 1].Header;
+                }
+
+                for (int i = 0; i < StudentsTable.Items.Count; i++)
+                {
+                    var rowView = StudentsTable.Items[i];
+
+                    excelSheet.Cells[i + 4, 1] = rowView.GetType().GetProperty("Id")?.GetValue(rowView) ?? string.Empty;
+                    excelSheet.Cells[i + 4, 2] = rowView.GetType().GetProperty("FullName").GetValue(rowView);
+                }
+
+                Microsoft.Office.Interop.Excel.Range sumRange = excelSheet.Range[
+                    excelSheet.Cells[4, StudentsTable.Columns.Count + Months.Count() * 2 + 1],
+                    excelSheet.Cells[AditionalTable.Items.Count + 3, StudentsTable.Columns.Count + Months.Count() * 2 + 1]];
+                sumRange.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbBlueViolet;
+                sumRange.Font.Bold = true;
+                Microsoft.Office.Interop.Excel.Range excusedRange = excelSheet.Range[
+                    excelSheet.Cells[4, StudentsTable.Columns.Count + Months.Count() * 2 + 2],
+                    excelSheet.Cells[AditionalTable.Items.Count + 3, StudentsTable.Columns.Count + Months.Count() * 2 + 2]];
+                excusedRange.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbDarkGreen;
+                excusedRange.Font.Bold = true;
+                Microsoft.Office.Interop.Excel.Range unexcusedRange = excelSheet.Range[
+                    excelSheet.Cells[4, StudentsTable.Columns.Count + Months.Count() * 2 + 3],
+                    excelSheet.Cells[AditionalTable.Items.Count + 3, StudentsTable.Columns.Count + Months.Count() * 2 + 3]];
+                unexcusedRange.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbDarkRed;
+                unexcusedRange.Font.Bold = true;
+                for (int i = 0; i < AditionalTable.Items.Count; i++)
+                {
+                    var rowView = AditionalTable.Items[i];
+
+                    excelSheet.Cells[i + 4, StudentsTable.Columns.Count + Months.Count() * 2 + 1] = rowView.GetType().GetProperty("Sum").GetValue(rowView);
+                    excelSheet.Cells[i + 4, StudentsTable.Columns.Count + Months.Count() * 2 + 2] = rowView.GetType().GetProperty("Excused").GetValue(rowView);
+                    excelSheet.Cells[i + 4, StudentsTable.Columns.Count + Months.Count() * 2 + 3] = rowView.GetType().GetProperty("Unexcused").GetValue(rowView);
+                }
+
+                for (int i = 0; i < Months.Count(); i++)
+                {
+                    var m = Months[i];
+                    for (int j = 0; j < Months[i].Attendence.Count(); j++)
+                    {
+                        var s = m.Attendence.ToArray()[j];
+                        if (s.Excused != 0)
+                        {
+                            excelSheet.Cells[j + 4, i * 2 + 3] =  s.Excused;
+                            Microsoft.Office.Interop.Excel.Range ex = excelSheet.Range[excelSheet.Cells[j + 4, i * 2 + 3], excelSheet.Cells[j + 4, i * 2 + 3]];
+                            ex.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbCadetBlue;
+                            ex.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                        }
+
+                        if (s.Unexcused != 0)
+                        {
+                            excelSheet.Cells[j + 4, i * 2 + 4] = s.Unexcused;
+                            Microsoft.Office.Interop.Excel.Range uex = excelSheet.Range[excelSheet.Cells[j + 4, i * 2 + 4], excelSheet.Cells[j + 4, i * 2 + 4]];
+                            uex.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbPaleVioletRed;
+                            uex.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                        }
+                    }
+                    if (m.Attendence.Sum(s => s.Excused) != 0)
+                    {
+                        excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 3] = m.Attendence.Sum(s => s.Excused);
+                        Microsoft.Office.Interop.Excel.Range ex = excelSheet.Range[
+                            excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 3],
+                            excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 3]];
+                        ex.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbGreen;
+                        ex.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                    }
+
+                    if (m.Attendence.Sum(s => s.Unexcused) != 0)
+                    {
+                        excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 4] = m.Attendence.Sum(s => s.Unexcused);
+                        Microsoft.Office.Interop.Excel.Range uex = excelSheet.Range[
+                            excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 4],
+                            excelSheet.Cells[Months[i].Attendence.Count() + 4, i * 2 + 4]];
+                        uex.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbRed;
+                        uex.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                    }
+                }
+
+                excelSheet.Columns.AutoFit();
+                excelApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При формировании отчета произошла ошибка:\n"+ex.Message);
+            }
+
+        }
     }
 }

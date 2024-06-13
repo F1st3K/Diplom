@@ -21,11 +21,11 @@ namespace AttendanceTracking.View.Services
         public IEnumerable<Student> GetStudentsByGroup(int groupId)
         {
             return DataContext.GetInstance().QueryReturn(
-                "SELECT p.id, p.first_name, p.last_name, p.patronomic " +
+                "SELECT p.id, p.last_name, p.first_name, p.patronomic " +
                 "FROM students " +
                 "JOIN peoples AS p ON students.id = p.id " +
                 "WHERE students.group_id = @0 " +
-                "ORDER BY p.first_name, p.last_name, p.patronomic",
+                "ORDER BY p.last_name, p.first_name, p.patronomic",
                 groupId
             ).ToList()
             .ConvertAll(row => new Student(int.Parse(row[0]), $"{row[1]} {row[2]} {row[3]}"));
@@ -73,9 +73,9 @@ namespace AttendanceTracking.View.Services
         public IEnumerable<Group> GetAllGroups()
         {
             return DataContext.GetInstance().QueryReturn(
-                "SELECT groups.id, c.id, groups.name " +
+                "SELECT groups.id, COALESCE(c.id, -1) AS c_id, groups.name " +
                 "FROM groups " +
-                "JOIN group_curators AS c ON groups.id = c.group_id "
+                "LEFT JOIN group_curators AS c ON groups.id = c.group_id "
             ).ToList()
             .ConvertAll(row => new Group(int.Parse(row[0]), int.Parse(row[1]), row[2]));
         }
@@ -85,7 +85,7 @@ namespace AttendanceTracking.View.Services
             return DataContext.GetInstance().QueryReturn(
                 "SELECT p.id, p.first_name, p.last_name, p.patronomic " +
                 "FROM teachers " +
-                "JOIN peoples AS p ON teachers.id = p.id "
+                "LEFT JOIN peoples AS p ON teachers.id = p.id "
             ).ToList()
             .ConvertAll(row => new Prepod(int.Parse(row[0]), $"{row[1]} {row[2]} {row[3]}"));
         }

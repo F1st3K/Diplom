@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="ImportForm" Height="450" Width="800">
+        Title="Детальный импорт\экспорт" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Name="Tabs" Grid.Row="0">
+            <TabItem Header="Люди" IsSelected="True" Margin="0,0,0.2,0" Height="20" VerticalAlignment="Top">
+                <DataGrid Name="Peoples" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Администраторы">
+                <DataGrid Name="Administrators" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Работники УЧ">
+                <DataGrid Name="Secretaries" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Преподаватели">
+                <DataGrid Name="Teachers" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Группы">
+                <DataGrid Name="Groups" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Кураторы">
+                <DataGrid Name="Curators" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Студенты">
+                <DataGrid Name="Students" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Старосты">
+                <DataGrid Name="Leaders" IsReadOnly="True"/>
+            </TabItem>
+            <TabItem Header="Пропуски">
+                <DataGrid Name="Passes" IsReadOnly="True"/>
+            </TabItem>
+        </TabControl>
+
+
+        <Grid Grid.Row="1" 
+                MinHeight="30pt">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+                <Button Name="BackButton"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="Вернутся к массовому импорту"
+                    Click="BackButton_Click"
+                />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft">
+                <Button Name="Export"
+                Content="Экспорт"
+                Click="Export_Click"
+                Margin="5pt"
+                Padding="5pt"
+            />
+                <Button Name="Import"
+                Content="Импорт"
+                Click="Import_Click"
+                Margin="5pt"
+                Padding="5pt"
+            />
+                <Button Name="DeleteTable"
+                Content="Зачистить таблицу в бд"
+                Click="DeleteTable_Click"
+                Margin="5pt"
+                Padding="5pt"
+            />
+            </StackPanel>
+        </Grid>
+            
+            
         
     </Grid>
 </Window>

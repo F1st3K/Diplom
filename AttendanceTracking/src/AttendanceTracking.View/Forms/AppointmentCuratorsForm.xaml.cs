@@ -66,9 +66,13 @@ namespace AttendanceTracking.View.Forms
                 return;
             var group = _groups.ElementAt(Groups.SelectedIndex);
             Prepods.SelectedIndex = _prepods.ToList().FindIndex(p => p.Id == group.CuratorId);
-            var curator = _prepods.ElementAt(Prepods.SelectedIndex);
             GroupText.Text = group.Name;
-            LeaderText.Text = curator.FullName;
+            LeaderText.Text = "";
+            if (Prepods.SelectedIndex >= 0)
+            {
+                var curator = _prepods.ElementAt(Prepods.SelectedIndex);
+                LeaderText.Text = curator.FullName;
+            }
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)

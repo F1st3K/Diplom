@@ -43,6 +43,7 @@
 
             <Button Name="CreateReport"
                     Content="Экспортировать отчет"
+                    Click="CreateReport_Click"
             />
         </StackPanel>
 

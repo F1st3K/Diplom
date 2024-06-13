@@ -38,15 +38,17 @@ namespace AttendanceTracking.View.Forms
 
             InitializeComponent();
             Created += p => Close();
-            People.ItemsSource = _peoples.Select(p => toStr(p));
+            People.ItemsSource = ActualFilter(_peoples).Select(p => toStr(p));
         }
+
+        private Func<IEnumerable<People>, IEnumerable<People>> ActualFilter;
 
         private void People_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (People.SelectedIndex < 0
-                || People.SelectedIndex >= _peoples.Count())
+                || People.SelectedIndex >= ActualFilter(_peoples).Count())
                 return;
-            _selectedPeople = _peoples.ElementAt(People.SelectedIndex);
+            _selectedPeople = ActualFilter(_peoples).ElementAt(People.SelectedIndex);
             Fullname.Text = _selectedPeople.FullName;
             TextRoles.Text = _selectedPeople.TextRoles;
         }
@@ -61,7 +63,7 @@ namespace AttendanceTracking.View.Forms
                 return distX.CompareTo(distY);
             });
             _peoples = peoples;
-            People.ItemsSource = _peoples.Select(p => toStr(p));
+            People.ItemsSource = ActualFilter(_peoples).Select(p => toStr(p));
         }
         string toStr(People p) => $"{p.FullName} ({p.TextRoles})";
 
@@ -76,7 +78,7 @@ namespace AttendanceTracking.View.Forms
                     roles.Add(Roles.Role.Administrator);
                 _selectedPeople.Roles = roles;
             }
-            if (AddToAdmin.IsChecked.Value &&
+            if (AddToSecretar.IsChecked.Value &&
                 MessageBox.Show("Вы точно хотите добавить учетную запись в группу Работники учебной части?", "Уверены?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _service.AddToSecretary(_selectedPeople.Id);
@@ -91,6 +93,34 @@ namespace AttendanceTracking.View.Forms
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Workers_Selected(object sender, RoutedEventArgs e)
+        {
+            ActualFilter = ps => ps.Where(p => !p.Roles.Contains(Roles.Role.Student));
+            if (AddToAdmin != null && AddToSecretar != null && People != null)
+            {
+                AddToAdmin.Visibility = Visibility.Visible;
+                AddToAdmin.IsChecked = false;
+                AddToSecretar.Visibility = Visibility.Visible;
+                AddToSecretar.IsChecked = false;
+                People.ItemsSource = ActualFilter(_peoples).Select(p => toStr(p));
+            }
+            
+        }
+
+        private void Students_Selected(object sender, RoutedEventArgs e)
+        {
+            ActualFilter = ps => ps.Where(p => p.Roles.Contains(Roles.Role.Student));
+            if (AddToAdmin != null && AddToSecretar != null && People != null)
+            {
+                AddToAdmin.Visibility = Visibility.Collapsed;
+                AddToAdmin.IsChecked = false;
+                AddToSecretar.Visibility = Visibility.Collapsed;
+                AddToSecretar.IsChecked = false;
+                People.ItemsSource = ActualFilter(_peoples).Select(p => toStr(p));
+            }
+            
         }
     }
 }

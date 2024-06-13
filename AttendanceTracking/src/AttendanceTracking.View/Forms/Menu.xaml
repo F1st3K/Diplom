@@ -103,7 +103,7 @@
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
-                    Content="Импортирование таблиц"
+                    Content="Импорт\Экспорт"
                     Visibility="Collapsed"
                     Click="ImportTablesButton_Click"
                     />

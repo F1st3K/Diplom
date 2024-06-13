@@ -106,12 +106,18 @@ namespace AttendanceTracking.View.Forms
 
         private void ImportTablesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var form = new SmartImportForm();
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
         }
 
         private void BackupButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var form = new RecoveryForm();
+            form.Show();
+            form.Closed += (s, ev) => Show();
+            Hide();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

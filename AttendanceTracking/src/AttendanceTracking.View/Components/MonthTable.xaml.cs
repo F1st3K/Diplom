@@ -58,6 +58,9 @@ namespace AttendanceTracking.View.Components
             return new MonthTable(daysInMonth, source, values, holidays.ToArray());
         }
 
+        public Attendens[] Values => _values;
+        public int[] Holidays => _holidays;
+
         public MonthTable(int days, List<List<string>> source, Attendens[] values = null, params int[] holidays)
         {
             _holidays = holidays;
