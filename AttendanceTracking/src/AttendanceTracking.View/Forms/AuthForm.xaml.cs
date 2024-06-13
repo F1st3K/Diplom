@@ -104,13 +104,6 @@ namespace AttendanceTracking.View.Forms
         {
             var acs = _accounts.GetAccounts();
 
-            if (acs.Where(a => a.People.Roles.Contains(Roles.Role.Administrator)).Count() <= 0)
-            {
-                //CreateDefalutAdmin();
-
-                acs = _accounts.GetAccounts();
-            }
-
             var ac = acs.FirstOrDefault(a => a.Login == LoginBox.Text);
             var isSuccsess = ac != null && ac.Hash == _hasher.Hash(PasswordBox.Password) && _succsessCaptcha;
 

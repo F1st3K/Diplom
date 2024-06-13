@@ -14,7 +14,7 @@ namespace AttendanceTracking.View.Services
                     "p.id, " +
                     "p.first_name, " +
                     "p.last_name, " +
-                    "p.patronomic, " +
+                    "COALESCE(p.patronomic, '') AS patronomic, " +
                     "users.login, " +
                     "users.hash, " +
                     "users.is_active, " +
@@ -90,7 +90,7 @@ namespace AttendanceTracking.View.Services
                     "peoples.id, " +
                     "peoples.first_name, " +
                     "peoples.last_name, " +
-                    "peoples.patronomic, " +
+                    "COALESCE(peoples.patronomic, '') AS patronomic, " +
                 "CASE WHEN a.id IS NOT NULL THEN TRUE ELSE FALSE END AS admin_id, " +
                 "CASE WHEN r.id IS NOT NULL THEN TRUE ELSE FALSE END AS secretary_id, " +
                 "CASE WHEN t.id IS NOT NULL THEN TRUE ELSE FALSE END AS teacher_id, " +
