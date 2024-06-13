@@ -3,6 +3,7 @@ using AttendanceTracking.View.Entities;
 using AttendanceTracking.View.Services;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,6 +66,63 @@ namespace AttendanceTracking.View.Forms
             InitMonthDataGrid(prevMonthDay);
             TextMonth.Text = russianMonths[prevMonthDay.Month - 1];
             TextYear.Text = prevMonthDay.Year.ToString();
+        }
+
+        private void CreateReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var excelApp = new Microsoft.Office.Interop.Excel.Application();
+                var excelBook = excelApp.Workbooks.Add();
+                var excelSheet = (Microsoft.Office.Interop.Excel.Worksheet)excelBook.Worksheets[1];
+
+                excelSheet.Cells[1, 1] = "Учет посещаемости группы " + TextGroup.Text + " за " + TextMonth.Text + " " + TextYear.Text + "г.";
+                excelSheet.Range[excelSheet.Cells[1, 1], excelSheet.Cells[1, MonthTable.Table.Columns.Count + StudentsTable.Columns.Count]].Merge();
+
+                for (int i = 1; i <= StudentsTable.Columns.Count; i++)
+                {
+                    excelSheet.Cells[2, i] = StudentsTable.Columns[i - 1].Header;
+                }
+                for (int i = 1; i <= MonthTable.Table.Columns.Count; i++)
+                {
+                    excelSheet.Cells[2, i + StudentsTable.Columns.Count] = MonthTable.Table.Columns[i - 1].Header;
+                }
+
+                for (int i = 0; i < StudentsTable.Items.Count; i++)
+                {
+                    var rowView = StudentsTable.Items[i];
+
+                    excelSheet.Cells[i + 3, 1] = rowView.GetType().GetProperty("Id").GetValue(rowView);
+                    excelSheet.Cells[i + 3, 2] = rowView.GetType().GetProperty("FullName").GetValue(rowView);
+                }
+
+                foreach (var v in MonthTable.Values)
+                {
+                    excelSheet.Cells[v.StudentIndex + 3, v.Day + StudentsTable.Columns.Count] = v.Hours;
+                    Microsoft.Office.Interop.Excel.Range c = excelSheet.Range[
+                        excelSheet.Cells[v.StudentIndex + 3, v.Day + StudentsTable.Columns.Count],
+                        excelSheet.Cells[v.StudentIndex + 3, v.Day + StudentsTable.Columns.Count]];
+                    c.Interior.Color = v.IsExcused 
+                        ? Microsoft.Office.Interop.Excel.XlRgbColor.rgbGreen 
+                        : Microsoft.Office.Interop.Excel.XlRgbColor.rgbRed;
+                    c.Font.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbWhite;
+                }
+                foreach (var h in MonthTable.Holidays)
+                {
+                    Microsoft.Office.Interop.Excel.Range r = excelSheet.Range[
+                        excelSheet.Cells[3, h + StudentsTable.Columns.Count],
+                        excelSheet.Cells[StudentsTable.Items.Count + 2, h + StudentsTable.Columns.Count]];
+                    r.Interior.Color = Microsoft.Office.Interop.Excel.XlRgbColor.rgbLightGray;
+                }
+
+                excelSheet.Columns.AutoFit();
+                excelApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("При формировании отчета произошла ошибка");
+            }
+            
         }
     }
 }
