@@ -5,12 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="Назначение старосты" Height="250" Width="450">
-    <Grid>
+        WindowStartupLocation="CenterScreen"
+        FontSize="12pt"
+        Title="Назначение старосты" 
+        MinHeight="300" MinWidth="400"
+        Height="350" Width="450">
+    
+        
+    <StackPanel
+        Orientation="Vertical"
+        HorizontalAlignment="Center"
+        >
         <TextBlock
-            FontSize="15"
+            FontSize="18pt"
             Margin="10"
-            HorizontalAlignment="Center"
             >
             <Run>Текущий староста группы</Run>
             <Run Name="GroupText"/>
@@ -18,21 +26,21 @@
             <LineBreak/>
             <Run Name="LeaderText"/>
         </TextBlock>
-        <StackPanel
-            Orientation="Horizontal"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            >
-            <ComboBox Name="Students"
-                      FontSize="15"
-                      Margin="10, 0"
-                      Width="200pt"/>
-            <Button Name="SetLeader"
-                    FontSize="15"
-                    Margin="10, 0"
-                    Content="Назначить старостой"
-                    Click="SetLeader_Click"/>
-        </StackPanel>
         
-    </Grid>
+        <ComboBox Name="Students"
+                    Margin="10pt"
+                    Width="250pt"/>
+        <Button Name="SetLeader"
+                Margin="10pt, 5pt"
+                
+                    Padding="8pt"
+                Content="Назначить старостой"
+                Click="SetLeader_Click"/>
+        <Button Name="Back"
+                Margin="10pt"
+                Padding="8pt"
+                Content="Вернуться в меню"
+                Click="Back_Click"/>
+    </StackPanel>
+        
 </Window>

@@ -52,7 +52,8 @@ namespace AttendanceTracking.View.Forms
             var group = _groups.ElementAt(Groups.SelectedIndex);
             var curator = _prepods.ElementAt(Prepods.SelectedIndex);
             group.CuratorId = curator.Id;
-            Groups.ItemsSource = Groups.ItemsSource.Cast<string>().ToArray();
+            Groups.ItemsSource = _groups.Select(toStr);
+            Prepods.ItemsSource = _prepods.Select((p, i) => $"{i + 1}. {p.FullName}");
             GroupText.Text = group.Name;
             LeaderText.Text = curator.FullName;
             
@@ -89,5 +90,17 @@ namespace AttendanceTracking.View.Forms
         }
         string toStr(Group g) =>
                     $"{g.Name}\t-  { _prepods.FirstOrDefault(c => c.Id == g.CuratorId)?.FullName ?? "нет"}";
+
+        private void Prepods_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetLeader.IsEnabled = Prepods.SelectedIndex >= 0
+                && !_groups.Any(g => g.CuratorId == _prepods.ElementAt(Prepods.SelectedIndex).Id)
+                && Groups.SelectedIndex >= 0;
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

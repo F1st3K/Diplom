@@ -46,5 +46,10 @@ namespace AttendanceTracking.View.Forms
             LeaderText.Text = leader.FullName;
             _editLeaderIdCommand?.Invoke(leader.Id);
         }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

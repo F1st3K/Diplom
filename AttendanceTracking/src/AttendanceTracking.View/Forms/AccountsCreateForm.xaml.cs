@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,6 +52,8 @@ namespace AttendanceTracking.View.Forms
             _selectedPeople = ActualFilter(_peoples).ElementAt(People.SelectedIndex);
             Fullname.Text = _selectedPeople.FullName;
             TextRoles.Text = _selectedPeople.TextRoles;
+
+            BlockCreate();
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -69,25 +72,24 @@ namespace AttendanceTracking.View.Forms
 
         private void CreateClick(object sender, RoutedEventArgs e)
         {
+            var roles = _selectedPeople.Roles.ToList();
             if (AddToAdmin.IsChecked.Value &&
+                roles.Contains(Roles.Role.Administrator) == false &&
                 MessageBox.Show("Вы точно хотите добавить учетную запись в группу Администраторов?", "Уверены?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             { 
                 _service.AddToAdministrators(_selectedPeople.Id);
-                var roles = _selectedPeople.Roles.ToList();
-                if (roles.Contains(Roles.Role.Administrator) == false)
-                    roles.Add(Roles.Role.Administrator);
+                roles.Add(Roles.Role.Administrator);
                 _selectedPeople.Roles = roles;
             }
             if (AddToSecretar.IsChecked.Value &&
+                roles.Contains(Roles.Role.Secretary) == false &&
                 MessageBox.Show("Вы точно хотите добавить учетную запись в группу Работники учебной части?", "Уверены?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _service.AddToSecretary(_selectedPeople.Id);
-                var roles = _selectedPeople.Roles.ToList();
-                if (roles.Contains(Roles.Role.Secretary) == false)
-                    roles.Add(Roles.Role.Secretary);
+                roles.Add(Roles.Role.Secretary);
                 _selectedPeople.Roles = roles;
             }
-            Created?.Invoke(new Account(_selectedPeople, Login.Text, _hasher.Hash(Password.Text), false));
+            Created?.Invoke(new Account(_selectedPeople, Login.Text, _hasher.Hash(Password.Password), false));
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)
@@ -121,6 +123,25 @@ namespace AttendanceTracking.View.Forms
                 People.ItemsSource = ActualFilter(_peoples).Select(p => toStr(p));
             }
             
+        }
+
+        private void Login_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            BlockCreate();
+        }
+
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            BlockCreate();
+        }
+
+        private void BlockCreate()
+        {
+            string loginPattern = @"^[a-zA-Z0-9_]{4,20}$";
+
+            Create.IsEnabled = _selectedPeople != null &&
+                Regex.IsMatch(Login.Text, loginPattern) &&
+                Password.Password.Length >= 8;
         }
     }
 }

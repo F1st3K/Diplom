@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,9 +43,9 @@ namespace AttendanceTracking.View.Forms
         private void EditClick(object sender, RoutedEventArgs e)
         {
             _account.Login = Login.Text;
-            if (Password.Text != string.Empty)
+            if (Password.Password != string.Empty)
             {
-                _account.Hash = _hasher.Hash(Password.Text);
+                _account.Hash = _hasher.Hash(Password.Password);
                 _account.IsActive = false;
             }
             Edited?.Invoke(_account);
@@ -53,6 +54,24 @@ namespace AttendanceTracking.View.Forms
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Login_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            BlockCreate();
+        }
+
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            BlockCreate();
+        }
+        private void BlockCreate()
+        {
+            string loginPattern = @"^[a-zA-Z0-9_]{4,20}$";
+            string passwordPattern = @"^[a-zA-Z0-9_]{4,20}$"; ;
+
+            Create.IsEnabled = Regex.IsMatch(Login.Text, loginPattern) &&
+                Regex.IsMatch(Password.Password, passwordPattern);
         }
     }
 }

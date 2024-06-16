@@ -5,61 +5,76 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="Назначение кураторов" Height="500" Width="500">
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        Title="Назначение кураторов" 
+        MinHeight="340" MinWidth="650"
+        Height="370" Width="700">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel 
-                 Grid.Column="0"
-                 Grid.Row="1">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock>Поиск:</TextBlock>
+        <Grid Margin="3pt"
+            Grid.Column="0"
+                Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock>Поиск:</TextBlock>
                 <TextBox Name="SearchBox"
+                         Grid.Column="1"
+                         Margin="3pt, 0"
                      TextChanged="SearchBox_TextChanged"/>
-            </StackPanel>
-            <ScrollViewer
-                VerticalScrollBarVisibility="Auto">
-                <ListBox Name="Groups"
-                 SelectionChanged="Groups_SelectionChanged"/>
-            </ScrollViewer>
-        </StackPanel>
-        
+        </Grid>
+        <ListBox Name="Groups"
+                Grid.Column="0"
+                Grid.Row="1"
+            SelectionChanged="Groups_SelectionChanged"/>
 
-
-        <TextBlock
-            Grid.Column="1"
-            FontSize="15"
-            Margin="10"
-            HorizontalAlignment="Center"
-            >
-            <Run>Текущий куратор группы</Run>
-            <Run Name="GroupText"/>
-            <Run>−</Run>
-            <LineBreak/>
-            <Run Name="LeaderText"/>
-        </TextBlock>
         <StackPanel
             Grid.Column="1"
+            Grid.Row="0"
+            Grid.RowSpan="2"
             Orientation="Vertical"
             HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
             >
+            <TextBlock
+                Grid.Column="1"
+                FontSize="18"
+                Margin="10"
+                HorizontalAlignment="Center"
+                >
+                <Run>Текущий куратор группы</Run>
+                <Run Name="GroupText"/>
+                <Run>−</Run>
+                <LineBreak/>
+                <Run Name="LeaderText"/>
+            </TextBlock>
             <ComboBox Name="Prepods"
-                      FontSize="15"
-                      Margin="0, 10"
-                      Width="200pt"/>
+                      Width="250pt"
+                    Margin="0, 20pt"
+                    Padding="8pt"
+                    SelectionChanged="Prepods_SelectionChanged"/>
             <Button Name="SetLeader"
-                    FontSize="15"
-                    Margin="0, 10"
+                    Margin="20pt, 5pt"
+                    Padding="8pt"
                     Content="Назначить куратором"
+                    IsEnabled="False"
                     Click="SetLeader_Click"
+                    />
+            <Button Name="Back"
+                    Margin="20pt, 25pt"
+                    Padding="8pt"
+                    Content="Вернутся в меню"
+                    Click="Back_Click"
                     />
         </StackPanel>
     </Grid>

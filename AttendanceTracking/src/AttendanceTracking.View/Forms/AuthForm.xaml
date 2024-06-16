@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
+        
+        WindowStartupLocation="CenterScreen"
         Title="Авторизация" Height="400" Width="400">
     <Grid>
         <TextBlock Name="Title"
