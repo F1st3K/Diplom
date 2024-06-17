@@ -45,7 +45,7 @@ namespace AttendanceTracking.View.Forms
 
         private void Pwd_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            Enter.IsEnabled = Pwd.Password != string.Empty && Pwd.Password == RepeatPwd.Password;
+            Enter.IsEnabled = Pwd.Password != string.Empty && Pwd.Password == RepeatPwd.Password && Pwd.Password.Length >= 4;
         }
     }
 }

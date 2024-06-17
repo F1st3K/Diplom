@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         FontSize="12pt"
-        Title="AttendanceViewForm" 
+        Title="Посещаемость за период" 
         MinHeight="450" MinWidth="800"
         Height="800" Width="1200">
     <Grid>
@@ -70,17 +70,18 @@
             Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="154.4"/>
-                    <ColumnDefinition Width="58.4"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
+                
                 <DataGrid Name="StudentsTable"
                       Grid.Column="0"
                       IsReadOnly="True"
-                      ColumnHeaderHeight="41"
+                      ColumnHeaderHeight="52"
                       ItemsSource="{Binding People}"
-                      AutoGenerateColumns="False" Grid.ColumnSpan="3" Margin="0,0,795.8,0">
+                      AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                         Header="№"
@@ -98,9 +99,10 @@
                     />
                     </DataGrid.Columns>
                 </DataGrid>
+                
                 <ScrollViewer Grid.Column="2"
                               VerticalScrollBarVisibility="Disabled"
-                              HorizontalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="0.2,0,167.8,0">
+                              HorizontalScrollBarVisibility="Auto">
                     <StackPanel Name="MonthDataGrid"
                                 Orientation="Horizontal"/>
                 </ScrollViewer>
@@ -141,6 +143,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
+                
             </Grid>
 
         </ScrollViewer>

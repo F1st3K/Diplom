@@ -68,10 +68,9 @@ namespace AttendanceTracking.View.Forms
         private void BlockCreate()
         {
             string loginPattern = @"^[a-zA-Z0-9_]{4,20}$";
-            string passwordPattern = @"^[a-zA-Z0-9_]{4,20}$"; ;
 
             Create.IsEnabled = Regex.IsMatch(Login.Text, loginPattern) &&
-                Regex.IsMatch(Password.Password, passwordPattern);
+                Password.Password.Length >= 4;
         }
     }
 }

@@ -141,7 +141,7 @@ namespace AttendanceTracking.View.Forms
 
             Create.IsEnabled = _selectedPeople != null &&
                 Regex.IsMatch(Login.Text, loginPattern) &&
-                Password.Password.Length >= 8;
+                Password.Password.Length >= 4;
         }
     }
 }
