@@ -5,21 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="AccountsEditForm" Height="250" Width="400">
-    <StackPanel>
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        Title="Настройка учетной записи"
+        MinHeight="500" MinWidth="350" 
+        Height="500" Width="500">
+    <StackPanel Margin="10pt">
 
-        <TextBlock>
-            Настройка учетной записи для:
-            <Run Name="Fullname"/>
-            , роль: 
-            <Run Name="TextRoles"/>
+        <TextBlock FontSize="18pt"
+                       Margin="0, 20pt">
+                Настройка учетной записи:
+                <LineBreak/>
+                <Run Name="Fullname"/>
+                <LineBreak/>
+                Роль: 
+                <Run Name="TextRoles"/>
         </TextBlock>
-        
-        <TextBox Name="Login"/>
-        <TextBox Name="Password"/>
-        <Button Content="Применить изменения"
+
+        <StackPanel Margin="0, 5pt">
+            <TextBlock Text="Логин:"/>
+            <TextBox Name="Login" TextChanged="Login_TextChanged"/>
+        </StackPanel>
+
+        <StackPanel Margin="0, 5pt">
+            <TextBlock Text="Сбросить пароль:"/>
+            <PasswordBox Name="Password" PasswordChanged="Password_PasswordChanged"/>
+        </StackPanel>
+
+        <Button Name="Create"
+                    Margin="20pt"
+                    Padding="8pt"
+                Content="Применить изменения"
                 Click="EditClick"/>
-        <Button Content="Обратно к УЗ"
+        <Button Margin="20pt, 10pt, 20pt, 0"
+                    Padding="8pt"
+                Content="Вернуться к учетным записям"
                 Click="CloseClick"/>
     </StackPanel>
 </Window>

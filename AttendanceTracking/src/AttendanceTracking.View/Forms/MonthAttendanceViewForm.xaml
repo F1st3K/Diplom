@@ -5,11 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="Просмотр учета посещаемости за месяц" Height="450" Width="800">
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        Title="Просмотр учета посещаемости за месяц" 
+        MinHeight="450" MinWidth="800"
+        Height="800" Width="1400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -18,70 +23,112 @@
         </Grid.ColumnDefinitions>
 
         <ComboBox Name="MonthSwitcher"
+                  Margin="3pt"
                   Grid.Column="0"
                   Grid.Row="0">
             <ComboBoxItem Content="Текущий месяц" Selected="CurrentMonth_Selected"/>
-            <ComboBoxItem Content="Предидущий месяц" Selected="PrevMonth_Selected"/>
+            <ComboBoxItem Content="Предыдущий месяц" Selected="PrevMonth_Selected"/>
         </ComboBox>
 
-        <TextBlock 
-                Grid.Column="1"
-                Grid.Row="0"
-                HorizontalAlignment="Left">
+        <TextBlock Margin="3pt"
+            Grid.Column="1"
+            Grid.Row="0">
             <Run Text="Учет посещаемости группы"/>
             <Run Name="TextGroup"/>
             <Run Text="за"/>
             <Run Name="TextMonth"/>
             <Run Name="TextYear"/>
             <Run Text="г."/>
-
         </TextBlock>
-        <StackPanel
-            Grid.Column="1"
-            Grid.Row="0"
-            Orientation="Horizontal"
-            HorizontalAlignment="Right">
-            
-
-            <Button Name="CreateReport"
-                    Content="Экспортировать отчет"
-                    Click="CreateReport_Click"
-            />
-        </StackPanel>
 
         <ScrollViewer
             Grid.Column="0"
             Grid.Row="1"
-            Grid.ColumnSpan="2">
-            <StackPanel Orientation="Horizontal">
+            Grid.ColumnSpan="2"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
                 <DataGrid Name="StudentsTable"
+                          Grid.Column="0"
                       IsReadOnly="True"
                       
                       ItemsSource="{Binding People}"
                       AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
                         Header="№"
                         Binding="{Binding Id}"
                         CanUserSort="False"
                         CanUserResize="False"
                         CanUserReorder="False"
                     />
-                    <DataGridTextColumn 
+                        <DataGridTextColumn 
                         Header="Фамилия Имя Отчество"
                         Binding="{Binding FullName}"
                         CanUserSort="False"
                         CanUserResize="False"
                         CanUserReorder="False"
                     />
-                </DataGrid.Columns>
+                    </DataGrid.Columns>
                 </DataGrid>
-                <Grid Name="MonthDataGrid">
+                <ScrollViewer Grid.Column="1"
+                              VerticalScrollBarVisibility="Disabled"
+                              HorizontalScrollBarVisibility="Auto">
+                    <Grid Name="MonthDataGrid"
+                      Grid.Column="1">
 
-                </Grid>
-            </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+                <DataGrid Name="AditionalTable"
+                          Grid.Column="2"
+                      Loaded="AditionalTable_Loaded"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn 
+                        Header="Всего уваж."
+                        Foreground="White"
+                        Binding="{Binding Excused}"
+                    />
+                        <DataGridTextColumn 
+                        Header="Всего не уваж."
+                        Foreground="White"
+                        Binding="{Binding Unexcused}"
+                    />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
 
         </ScrollViewer>
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" 
+                    Orientation="Horizontal" >
+            <Button Name="BackButton"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="Вернуться в меню"
+                    Click="BackButton_Click"
+                />
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" 
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft" >
+            <Button Name="CreateReport"
+                    Margin="5pt"
+                    Padding="5pt"
+                    Content="Экспортировать отчет"
+                    Click="CreateReport_Click"
+            />
+        </StackPanel>
+            
+        
     </Grid>
 
 </Window>

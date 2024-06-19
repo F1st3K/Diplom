@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AttendanceTracking.View.Forms
 {
@@ -51,6 +53,42 @@ namespace AttendanceTracking.View.Forms
             MonthTable = MonthTable.Create(date, StudentsTable.Items.Count, _getHoursQuery?.Invoke(date).ToArray());
             MonthTable.ChangeHours += MonthTable_ChangeHours;
             MonthDataGrid.Children.Add(MonthTable);
+
+            string forNullEmpty(int n) => n == 0 ? string.Empty : n.ToString();
+            MonthTable.ChangeHours += (o, a) => 
+            {
+                var values = _getHoursQuery?.Invoke(date);
+                AditionalTable.ItemsSource = Enumerable.Range(0, StudentsTable.Items.Count)
+                .Select(i => new
+                {
+                    Excused = forNullEmpty(values.Sum(v => v.StudentIndex == i && v.IsExcused ? v.Hours : 0)),
+                    Unexcused = forNullEmpty(values.Sum(v => v.StudentIndex == i && !v.IsExcused ? v.Hours : 0)),
+                })
+                .Concat(new[] { new {
+                    Excused = forNullEmpty(values.Sum(v => v.IsExcused ? v.Hours : 0)),
+                    Unexcused = forNullEmpty(values.Sum(v => !v.IsExcused ? v.Hours : 0)),
+                }});
+                var t = new DispatcherTimer();
+                t.Interval = TimeSpan.FromMilliseconds(10);
+                t.Tick += (ov, v) => { ColorAditinal(); t.Stop(); };
+                t.Start();
+            };
+
+            AditionalTable.ItemsSource = Enumerable.Range(0, StudentsTable.Items.Count)
+                .Select(i => new
+                {
+                    Excused = forNullEmpty(MonthTable.Values.Sum(v => v.StudentIndex == i && v.IsExcused ? v.Hours : 0)),
+                    Unexcused = forNullEmpty(MonthTable.Values.Sum(v => v.StudentIndex == i && !v.IsExcused ? v.Hours : 0)),
+                })
+                .Concat(new[] { new {
+                    Excused = forNullEmpty(MonthTable.Values.Sum(v => v.IsExcused ? v.Hours : 0)),
+                    Unexcused = forNullEmpty(MonthTable.Values.Sum(v => !v.IsExcused ? v.Hours : 0)),
+                }});
+
+            var timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(10);
+            timer.Tick += (ov, v) => { ColorAditinal(); timer.Stop(); };
+            timer.Start();
         }
 
         private string[] russianMonths = new string[] { "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь" };
@@ -77,6 +115,63 @@ namespace AttendanceTracking.View.Forms
             InitMonthDataGrid(DateMonth);
             TextMonth.Text = russianMonths[DateMonth.Month - 1];
             TextYear.Text = DateMonth.Year.ToString();
+        }
+
+        private void ColorAditinal()
+        {
+            for (int i = 0; i < AditionalTable.Items.Count; i++)
+            {
+                DataGridRow row = (DataGridRow)AditionalTable.ItemContainerGenerator.ContainerFromIndex(i);
+                {
+                    DataGridCell cell = AditionalTable.Columns[0].GetCellContent(row).Parent as DataGridCell;
+                    if (((TextBlock)cell.Content).Text != string.Empty)
+                    {
+                        Style style = new Style(typeof(DataGridCell));
+                        style.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.CadetBlue));
+                        cell.Style = style;
+                    }
+                }
+                {
+                    DataGridCell cell = AditionalTable.Columns[1].GetCellContent(row).Parent as DataGridCell;
+                    if (((TextBlock)cell.Content).Text != string.Empty)
+                    {
+                        Style style = new Style(typeof(DataGridCell));
+                        style.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.PaleVioletRed));
+                        cell.Style = style;
+                    }
+                }
+                if (i == AditionalTable.Items.Count - 1)
+                {
+                    {
+                        DataGridCell cell = AditionalTable.Columns[0].GetCellContent(row).Parent as DataGridCell;
+                        if (((TextBlock)cell.Content).Text != string.Empty)
+                        {
+                            Style style = new Style(typeof(DataGridCell));
+                            style.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.Green));
+                            cell.Style = style;
+                        }
+                    }
+                    {
+                        DataGridCell cell = AditionalTable.Columns[1].GetCellContent(row).Parent as DataGridCell;
+                        if (((TextBlock)cell.Content).Text != string.Empty)
+                        {
+                            Style style = new Style(typeof(DataGridCell));
+                            style.Setters.Add(new Setter(DataGridCell.BackgroundProperty, Brushes.Red));
+                            cell.Style = style;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void AditionalTable_Loaded(object sender, RoutedEventArgs e)
+        {
+            ColorAditinal();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

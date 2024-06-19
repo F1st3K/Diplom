@@ -67,7 +67,7 @@ namespace AttendanceTracking.View.Components
             _values = values ?? new Attendens[0];
             _source = new DataTable();
             for (int i = 1; i <= days; i++)
-                _source.Columns.Add(new DataColumn(i.ToString()));
+                _source.Columns.Add(new DataColumn(i.ToString("00")));
             source.ForEach(r => _source.Rows.Add(r.ToArray()));
             InitializeComponent();
             InitializeMonthTable();
@@ -170,7 +170,7 @@ namespace AttendanceTracking.View.Components
             {
                 DataGridTemplateColumn buttonColumn = new DataGridTemplateColumn();
                 buttonColumn.CellTemplate = new DataTemplate(typeof(Button));
-                buttonColumn.Header = day;
+                buttonColumn.Header = day.ToString("00");
 
                 FrameworkElementFactory buttonFactory = new FrameworkElementFactory(typeof(Button));
                 

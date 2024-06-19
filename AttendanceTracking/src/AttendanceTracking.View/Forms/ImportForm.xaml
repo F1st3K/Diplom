@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="Детальный импорт\экспорт" Height="450" Width="800">
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="300" MinWidth="850"
+        Title="Детальный импорт\экспорт" 
+        Height="500" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -13,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <TabControl Name="Tabs" Grid.Row="0">
-            <TabItem Header="Люди" IsSelected="True" Margin="0,0,0.2,0" Height="20" VerticalAlignment="Top">
+            <TabItem Header="Люди" IsSelected="True">
                 <DataGrid Name="Peoples" IsReadOnly="True"/>
             </TabItem>
             <TabItem Header="Администраторы">
@@ -75,7 +79,7 @@
                 Padding="5pt"
             />
                 <Button Name="DeleteTable"
-                Content="Зачистить таблицу в бд"
+                Content="Зачистить таблицу"
                 Click="DeleteTable_Click"
                 Margin="5pt"
                 Padding="5pt"

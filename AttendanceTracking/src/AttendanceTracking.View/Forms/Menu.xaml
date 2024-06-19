@@ -71,7 +71,7 @@
                     Height="1.1cm"
                     Width="10cm"
                     Margin="10pt, 5pt"
-                    Content="Общая посещаемость"
+                    Content="Посещаемость за период"
                     Visibility="Collapsed"
                     Click="ViewAttendanceButton_Click"
                     />

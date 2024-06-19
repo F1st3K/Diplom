@@ -55,12 +55,15 @@ namespace AttendanceTracking.View.Services
                 "WHERE passes.student_id = @0 AND passes.date = @1",
                 uid, date
             );
-            DataContext.GetInstance().QueryExecute(
-                "INSERT " +
-                "INTO passes (student_id, date, hours, is_excused) " +
-                "VALUES (@0, @1, @2, @3)",
-                uid, date, attendens.Hours, attendens.IsExcused
-            );
+            if (attendens.Hours != 0)
+            {
+                DataContext.GetInstance().QueryExecute(
+                    "INSERT " +
+                    "INTO passes (student_id, date, hours, is_excused) " +
+                    "VALUES (@0, @1, @2, @3)",
+                    uid, date, attendens.Hours, attendens.IsExcused
+                );
+            }
         }
     }
 }

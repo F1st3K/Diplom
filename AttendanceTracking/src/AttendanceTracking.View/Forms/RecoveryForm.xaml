@@ -5,20 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="RecoveryForm" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        FontSize="12pt"
+        Title="Резервное копирование и востановление"
+        MinHeight="300" MinWidth="350"
+        Height="350" Width="400">
     <Grid>
-        <StackPanel>
-            <ComboBox Name="BackupsList"/>
+        <StackPanel Margin="5pt">
+
+            <Button Name="BackupButton" 
+                    Content="Создать резервную копию"
+                    Click="BackupButton_Click"
+                    Margin="20pt, 5pt"
+                    Padding="8pt"
+                />
+
+            <TextBlock Margin="30pt, 5pt">
+                Все резервные копии:
+            </TextBlock>
+
+            <ComboBox Name="BackupsList"
+                      Margin="30pt, 5pt"/>
+            
             <Button Name="RestoreButton"
+                    Margin="20pt, 5pt"
+                    Padding="8pt"
                 Content="Восстановить из резервной копии"
                 Click="RestoreButton_Click"
             />
 
+            <Button Name="Back"
+                    Margin="20pt, 20pt"
+                    Padding="8pt"
+                Content="Вернутся в меню"
+                Click="Back_Click"
+            />
 
-            <Button Name="BackupButton" 
-                    Content="Сделать резервную копию"
-                    Click="BackupButton_Click"
-                />
         </StackPanel>
     </Grid>
 </Window>

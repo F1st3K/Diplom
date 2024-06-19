@@ -62,5 +62,10 @@ namespace AttendanceTracking.View.Forms
             UpdateBackupsList();
             MessageBox.Show("База востановленна успешно!");
         }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

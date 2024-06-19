@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="300" MinWidth="500"
         Title="Импорт\Экспорт" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <TabControl Name="Tabs" Grid.Row="0">
-            <TabItem Header="Работники" IsSelected="True" Margin="0,0,0.2,0" Height="20" VerticalAlignment="Top">
+            <TabItem Header="Работники" IsSelected="True" >
                 <DataGrid Name="Workers" IsReadOnly="True"/>
             </TabItem>
             <TabItem Header="Преподаватели">

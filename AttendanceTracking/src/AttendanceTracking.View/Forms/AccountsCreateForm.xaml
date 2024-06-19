@@ -5,64 +5,92 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        Title="AccountsCreateForm" Height="450" Width="800">
+        FontSize="12pt"
+        WindowStartupLocation="CenterScreen"
+        Title="Создание учетной записи" MinHeight="520" MinWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel 
-                 Grid.Column="0"
-                 Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock>Поиск:</TextBlock>
-                <TextBox Name="SearchBox"
+
+        <Grid Grid.Column="0"
+                Grid.Row="0"
+                Margin="3pt"
+              >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       >Поиск:</TextBlock>
+            <TextBox Name="SearchBox"
+                     Grid.Column="1"
+                     Margin="3pt, 0"
                      TextChanged="SearchBox_TextChanged"/>
-                <ComboBox>
-                    <ComboBoxItem Content="Работники" 
+            <ComboBox Grid.Column="2">
+                <ComboBoxItem Content="Работники" 
                                   Selected="Workers_Selected"
                                   IsSelected="True"/>
-                    <ComboBoxItem Content="Студенты"
+                <ComboBoxItem Content="Студенты"
                                   Selected="Students_Selected"/>
-                </ComboBox>
-            </StackPanel>
-            <ScrollViewer
-                VerticalScrollBarVisibility="Auto">
-                <ListBox Name="People"
-                     SelectionChanged="People_SelectionChanged"/>
-            </ScrollViewer>
-        </StackPanel>
-
+            </ComboBox>
+        </Grid>
+        <ListBox Name="People"
+                 Grid.Column="0"
+                 Grid.Row="1"
+                SelectionChanged="People_SelectionChanged"/>
+        
         <StackPanel
             Grid.Column="1"
-                 Grid.Row="0">
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            HorizontalAlignment="Center">
 
-            <TextBlock>
-            Настройка учетной записи для:
-            <Run Name="Fullname"/>
-            , роль: 
-            <Run Name="TextRoles"/>
+            <TextBlock FontSize="18pt"
+                       Margin="0, 20pt">
+                Создание учетной записи:
+                <LineBreak/>
+                <Run Name="Fullname"/>
+                <LineBreak/>
+                Роль: 
+                <Run Name="TextRoles"/>
             </TextBlock>
 
-            <TextBox Name="Login"/>
-            <TextBox Name="Password"/>
-            
-            <CheckBox Name="AddToSecretar">
+            <StackPanel Margin="0, 5pt">
+                <TextBlock Text="Логин:"/>
+                <TextBox Name="Login" TextChanged="Login_TextChanged"/>
+            </StackPanel>
+
+            <StackPanel Margin="0, 5pt">
+                <TextBlock Text="Пароль:"/>
+                <PasswordBox Name="Password" PasswordChanged="Password_PasswordChanged"/>
+            </StackPanel>
+
+            <CheckBox Margin="0, 8pt" Name="AddToSecretar">
                 Добавить в группу работников учебной части
             </CheckBox>
-                
+
             <CheckBox Name="AddToAdmin">
                 Добавить в группу администраторов
             </CheckBox>
 
-            <Button Content="Создать УЗ"
+            <Button Name="Create"
+                    IsEnabled="False"
+                    Margin="20pt"
+                    Padding="8pt"
+                Content="Создать ученую запись"
                 Click="CreateClick"/>
-            <Button Content="Обратно к УЗ"
+            <Button Margin="20pt, 10pt, 20pt, 0"
+                    Padding="8pt"
+                Content="Вернуться к учетным записям"
                 Click="CloseClick"/>
         </StackPanel>
     </Grid>

@@ -135,6 +135,11 @@ namespace AttendanceTracking.View.Forms
             if (AccountsTable != null)
                 AccountsTable.ItemsSource = filtered(_accounts);
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 
     

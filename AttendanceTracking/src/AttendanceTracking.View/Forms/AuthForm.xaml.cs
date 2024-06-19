@@ -104,13 +104,6 @@ namespace AttendanceTracking.View.Forms
         {
             var acs = _accounts.GetAccounts();
 
-            if (acs.Where(a => a.People.Roles.Contains(Roles.Role.Administrator)).Count() <= 0)
-            {
-                //CreateDefalutAdmin();
-
-                acs = _accounts.GetAccounts();
-            }
-
             var ac = acs.FirstOrDefault(a => a.Login == LoginBox.Text);
             var isSuccsess = ac != null && ac.Hash == _hasher.Hash(PasswordBox.Password) && _succsessCaptcha;
 
@@ -170,6 +163,12 @@ namespace AttendanceTracking.View.Forms
             );
 
             _accounts.CreateAccount(new Account(admin, LoginBox.Text, _hasher.Hash(PasswordBox.Password), false));
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+
+            LoginBox.Focus();
         }
     }
 }

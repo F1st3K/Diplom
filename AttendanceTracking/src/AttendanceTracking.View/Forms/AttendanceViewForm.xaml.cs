@@ -242,5 +242,10 @@ namespace AttendanceTracking.View.Forms
             }
 
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
