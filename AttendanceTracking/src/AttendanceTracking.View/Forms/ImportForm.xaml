@@ -79,7 +79,7 @@
                 Padding="5pt"
             />
                 <Button Name="DeleteTable"
-                Content="Зачистить таблицу в бд"
+                Content="Зачистить таблицу"
                 Click="DeleteTable_Click"
                 Margin="5pt"
                 Padding="5pt"

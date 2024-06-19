@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AttendanceTracking.View.Forms"
         mc:Ignorable="d"
-        
+        Activated="Window_Activated"
         WindowStartupLocation="CenterScreen"
-        Title="Авторизация" Height="400" Width="400">
+        Title="Авторизация" 
+        MinHeight="450" MinWidth="350"
+        Height="500" Width="400">
     <Grid>
         <TextBlock Name="Title"
             Text="Авторизация"
@@ -38,7 +40,7 @@
                      Margin="20, 5"
                      FontSize="16"
             />
-            <StackPanel Name="Captcha" Visibility="Collapsed">
+            <StackPanel Name="Captcha"  Visibility="Collapsed">
                 <TextBlock 
                     Text="Каптча:"
                     FontSize="16"

@@ -9,7 +9,7 @@
         FontSize="12pt"
         Title="Посещаемость за период" 
         MinHeight="450" MinWidth="800"
-        Height="800" Width="1200">
+        Height="815" Width="1130">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -43,7 +43,7 @@
             <ComboBox Name="ComboSemestr" 
                       Grid.Column="1"
                       Margin="3pt, 0"
-                          SelectedIndex="0">
+                          SelectedIndex="2">
                 <ComboBoxItem Content="все семестры"/>
                 <ComboBoxItem Content="1 семестр"/>
                 <ComboBoxItem Content="2 семестр"/>
@@ -67,7 +67,8 @@
         <ScrollViewer
             Grid.Column="0"
             Grid.Row="1"
-            Grid.ColumnSpan="2">
+            Grid.ColumnSpan="2"
+            VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

@@ -69,8 +69,17 @@ namespace AttendanceTracking.View.Forms
         {
             string loginPattern = @"^[a-zA-Z0-9_]{4,20}$";
 
-            Create.IsEnabled = Regex.IsMatch(Login.Text, loginPattern) &&
-                Password.Password.Length >= 4;
+            Create.IsEnabled = false;
+
+            if (Login.Text != _account.Login && Regex.IsMatch(Login.Text, loginPattern) && Password.Password == string.Empty)
+                Create.IsEnabled = true;
+
+            else if (Password.Password != string.Empty && Password.Password.Length >= 4 && Login.Text == _account.Login)
+                Create.IsEnabled = true;
+
+            else if (Login.Text != _account.Login && Regex.IsMatch(Login.Text, loginPattern) &&
+                    Password.Password != string.Empty && Password.Password.Length >= 4)
+                Create.IsEnabled = true;
         }
     }
 }

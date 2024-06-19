@@ -164,5 +164,11 @@ namespace AttendanceTracking.View.Forms
 
             _accounts.CreateAccount(new Account(admin, LoginBox.Text, _hasher.Hash(PasswordBox.Password), false));
         }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+
+            LoginBox.Focus();
+        }
     }
 }
